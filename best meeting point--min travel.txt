@@ -1,0 +1,66 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+int solve(vector<vector<int>>grid,int row,int col)
+    {
+        // 1. Get x coordinate->row wise.
+        
+        vector<int>xcord;
+        
+        for(int i=0;i<row;i++){
+            for(int j=0;j<col;j++){
+                if(grid[i][j]==1)
+                    xcord.push_back(i);
+            }
+        }
+        
+        // 2. Get y coordinate -> column wise.
+        vector<int>ycord;
+        
+        for(int i=0;i<col;i++){
+            for(int j=0;j<row;j++){
+                if(grid[j][i]==1)
+                    ycord.push_back(i);
+            }
+        }
+        // just for checking purpose
+        
+        for(int i=0;i<xcord.size();i++)
+            cout<<xcord[i]<<" ";
+        cout<<endl;
+        for(int i=0;i<ycord.size();i++)
+            cout<<ycord[i]<<" ";
+        
+        
+        // 3. Get mid of x and y coordinate->best meeting point.
+        
+        int midx = xcord[xcord.size()/2];
+        int midy = ycord[ycord.size()/2];
+        
+        // 4. Calulate min distance because of median.
+        int dist = 0;
+        
+        for(int i=0;i<xcord.size();i++)
+            dist += abs(midx-xcord[i]);
+        
+        for(int i=0;i<ycord.size();i++)
+            dist+=abs(midy-ycord[i]);
+        
+        // 5. Return answer.
+        
+        return dist;
+    }
+    
+int main()
+    {
+        vector<vector<int>>grid = {{1,0,0,0,1},
+                                   {0,0,0,0,0},
+                                   {0,0,1,0,0}};
+        
+        int row = grid.size();
+        int col = grid[0].size();
+        
+        int dist = solve(grid,row,col);
+        cout<<dist<<endl;
+        return 0;
+    }

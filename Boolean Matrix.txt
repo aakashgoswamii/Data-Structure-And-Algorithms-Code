@@ -1,0 +1,203 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+void printMatrix(int arr[3][4]){
+	for(int i=0;i<3;i++)
+	    {
+	    	for(int j=0;j<4;j++)
+	    	    {
+	    	    	cout<<arr[i][j]<<" ";
+				}
+			cout<<endl;
+		}
+}
+
+void modifyMatrix(int arr[3][4])
+    {
+    	int row[3];
+    	int column[4];
+    	int i,j;
+    	for(int i=0;i<3;i++)
+    	    row[i] = 0;
+    	for(int i=0;i<4;i++)
+    	    column[i] = 0;
+    	
+    	for(int i=0;i<3;i++)
+    	    {
+    	    	for(int j=0;j<4;j++)
+    	    	    {
+    	    	    	if(arr[i][j]==1)
+    	    	    	   {
+    	    	    	   	row[i] = 1;
+    	    	    	   	column[j] = 1;
+						   }
+					}
+			}
+		for(int i=0;i<3;i++)
+		    {
+		    	for(int j=0;j<4;j++)
+		    	    {
+		    	    	if(row[i]==1||column[j]==1)
+		    	    	   arr[i][j]=1;
+					}
+			}
+		
+	}
+	
+	
+int main()
+    {
+    	int mat[3][4]={ {1, 0, 0, 1}, 
+                       {0, 0, 1, 0}, 
+                       {0, 0, 0, 0}}; 
+        
+        cout<<"Input matrix"<<endl;
+        printMatrix(mat);
+        
+        modifyMatrix(mat);
+        cout<<endl;
+        printMatrix(mat);
+    	
+	}
+
+
+***************************************************************************************************************************************************************************************
+// same as above but solution is of striver questions.
+
+
+#include<bits/stdc++.h>
+using namespace std;
+
+void printMatrix(int arr[4][4]){
+	for(int i=0;i<4;i++)
+	    {
+	    	for(int j=0;j<4;j++)
+	    	    {
+	    	    	cout<<arr[i][j]<<" ";
+				}
+			cout<<endl;
+		}
+}
+
+void modifyMatrix(int arr[4][4])
+    {
+    	int row[4];
+    	int column[4];
+    	int i,j;
+    	for(int i=0;i<4;i++)
+    	    row[i] = 1;
+    	for(int j=0;j<4;j++)
+    	    column[j] =1;
+    	
+    	for(int i=0;i<4;i++)
+    	    {
+    	    	for(int j=0;j<4;j++)
+    	    	    {
+    	    	    	if(arr[i][j]==0)
+    	    	    	   {
+    	    	    	   	row[i] = 0;
+    	    	    	   	column[j] = 0;
+						   }
+					}
+			}
+		for(int i=0;i<4;i++)
+		    {
+		    	for(int j=0;j<4;j++)
+		    	    {
+		    	    	if(row[i]==0||column[j]==0)
+		    	    	   arr[i][j]=0;
+					}
+			}
+		
+	}
+	
+	
+int main()
+    {
+    	int mat[4][4]={ {1,1,1,1}, 
+                        {1,0,1,1}, 
+                       {1, 1,0,0},
+		               {0,0,0,1} }; 
+        
+        cout<<"Input matrix"<<endl;
+        printMatrix(mat);
+        
+        modifyMatrix(mat);
+        cout<<endl;
+        printMatrix(mat);
+    	
+	}
+
+**********************************************************************************************************************************************************************************
+// optimal space approach in o(1) //
+#include<bits/stdc++.h>
+using namespace std;
+
+void printMatrix(int mat[4][4])
+    {
+    	for(int i=0;i<4;i++)
+    	    {
+    	    	for(int j=0;j<4;j++)
+    	    	    {
+    	    	    	cout<<mat[i][j]<<" ";
+					}
+				cout<<endl;
+			}
+	}
+
+void setMatrix(int mat[4][4])
+    {
+    	int row = 1;
+		int col = 1;
+		
+		for(int i=0;i<4;i++)
+		    {
+		    for(int j=0;j<4;j++)
+			    {
+			    if(i==0&&mat[i][j]==0)
+			       row = 0;
+			    if(j==0&&mat[i][j]==0)
+			       col = 0;
+			    if(mat[i][j]==0)
+			       {
+			       	mat[0][j] = 0;
+			       	mat[i][0] = 0;
+				   }
+				}	
+			}
+		for(int i=0;i<4;i++)
+		    {
+		    for(int j=0;j<4;j++)
+			    {
+			     if(mat[0][j]==0||mat[i][0]==0)
+				    mat[i][j] = 0;	
+				}	
+			}
+	    if(row == 0)
+	       {
+	       	for(int i=0;i<4;i++)
+	       	    mat[0][i] = 0;
+		   }
+		   
+		if(col==0)
+		   {
+		   	for(int i=0;i<4;i++)
+		   	    {
+		   	    mat[i][0] = 0;	
+				}	 
+	}
+}
+
+int main()
+    {
+    	int mat[4][4] ={{1, 1, 1, 1}, 
+                        {1, 0, 1, 1}, 
+                        {1, 1, 0, 0},
+		        {0, 0, 0, 1}   };
+        
+        printMatrix(mat);
+        cout<<endl;
+        setMatrix(mat);
+        cout<<endl;
+        printMatrix(mat);
+	}

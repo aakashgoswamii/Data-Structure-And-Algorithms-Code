@@ -1,0 +1,75 @@
+#include<bits/stdc++.h>
+#include<queue>
+using namespace std;
+
+class node {
+public:
+	int data;
+	node *left, *right;
+};
+
+void zigzag(node *root)
+    {
+        queue<node*>q;
+        q.push(root);
+        bool ltr = false;
+        stack<node*>s;
+        while(!q.empty())
+            {
+                int size = q.size();
+                while(size>0)
+                {
+                    size = size-1;
+                    node *curr = q.front();
+                    q.pop();
+                    
+                    if(ltr==true)
+                        cout<<curr->data<<" ";
+                    
+                    else
+                        s.push(curr);
+                    if(curr->left!=NULL)
+                        q.push(curr->left);
+                    if(curr->right!=NULL)
+                        q.push(curr->right);
+                }
+            if(ltr==false)
+                {
+                    while(!s.empty())
+                        {
+                            node *curr = s.top();
+                            cout<<curr->data<<" ";
+                            s.pop();
+                        }
+                }
+            if(ltr==true)
+                ltr = false;
+            else
+                ltr = true;
+            }
+        return;
+    }
+
+node* newNode(int value)
+{
+	node *createNode = new node();
+	createNode->data = value;
+	createNode->left = createNode->right = NULL;
+	return createNode;
+}
+
+int main()
+{
+	node *root = NULL;
+	root = newNode(4);
+	root->left = newNode(5);
+	root->right = newNode(2);
+	root->right->left = newNode(3);
+	root->right->right = newNode(1);
+	root->right->left->left = newNode(6);
+	root->right->left->right = newNode(7);
+
+	zigzag(root);
+
+	return 0;
+}

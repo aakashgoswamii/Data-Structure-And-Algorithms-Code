@@ -1,0 +1,144 @@
+#include<bits/stdc++.h>
+#include<queue>
+#define t int t;cin>>t;while(t--)
+using namespace std;
+
+class node {
+public:
+	int data;
+	node *left;
+	node *right;
+};
+
+int height(node *root)
+{
+	if (root == NULL)
+		return -1;
+
+	return max(height(root->left), height(root->right)) + 1;
+
+}
+
+int findMini(node *root)
+{
+	if (root == NULL) {
+		cout << "Tree is empty" << endl;
+		return -1;
+	}
+	else if (root->left == NULL)
+		return root->data;
+	else
+		return findMini(root->left);
+
+}
+
+int findMaxIter(node *root)
+{
+	if (root == NULL)
+	{
+		cout << "Tree is empty" << endl;
+		return -1;
+	}
+
+	while (root->right != NULL)
+	{
+		root = root->right;
+	}
+	return root->data;
+}
+
+int findMinIter(node *root)
+{
+	if (root == NULL)
+	{
+		cout << "Tree is empty" << endl;
+		return -1;
+	}
+
+	while (root->left != NULL)
+		root = root->left;
+	return root->data;
+}
+
+int findMax(node *root)
+{
+	if (root == NULL)
+		return 0;
+	else if (root->right == NULL)
+		return root->data;
+	else
+		return findMax(root->right);
+}
+
+node *getNewNode(int val)
+{
+	node *newNode = new node();
+	newNode->data = val;
+	newNode->left = newNode->right = NULL;
+	return newNode;
+}
+
+bool search(node *rootptr, int value)
+{
+	if (rootptr == NULL)
+		return false;
+
+	else if (rootptr->data == value)
+		return true;
+
+	else if (rootptr->data > value)
+		return search(rootptr->left, value);
+	else
+		return search(rootptr->right, value);
+}
+node *insert(node *rootptr, int val)
+{
+	if (rootptr == NULL)
+		rootptr = getNewNode(val);
+	else if (val <= rootptr->data) {
+		rootptr->left = insert(rootptr->left, val);
+	}
+	else
+	{
+		rootptr->right = insert(rootptr->right, val);
+	}
+	return rootptr;
+}
+
+void LevelOrdertraversal(node *root)
+{
+	if (root == NULL)
+		return;
+
+	queue<node*>q;
+	q.push(root);
+
+	while (!q.empty()) {
+		node *current = q.front();
+		cout << current->data << " ";
+		if (current->left != NULL)
+			q.push(current->left);
+		if (current->right != NULL)
+			q.push(current->right);
+		q.pop();
+	}
+
+}
+
+int main()
+{
+#ifndef ONLINE_JUDGE
+	freopen("input.txt", "r", stdin);
+	freopen("output.txt", "w", stdout);
+#endif
+
+	node *root = NULL;
+	root = insert(root, 1);
+	root = insert(root, 2);
+	root = insert(root, 3);
+	root = insert(root, 4);
+	root = insert(root, 5);
+	// cout << "height of binary search tree is " << height(root) << endl;
+	LevelOrdertraversal(root);
+	return 0;
+}

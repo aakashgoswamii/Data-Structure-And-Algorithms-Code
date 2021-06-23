@@ -1,0 +1,74 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define vertex 7
+
+
+void printGraph(vector<int>adj[],int n)
+    {
+        for(int i=0;i<=n;i++)
+            {
+                for(auto x:adj[i])
+                    cout<<x<<" ";
+                cout<<endl;
+            }
+    }
+
+
+void dfsRecur(int node,vector<int>adj[],vector<int>&visited,vector<int>&dfs)
+    {
+        visited[node] = 1;
+        dfs.push_back(node);
+        for(auto x:adj[node])
+            {
+                if(visited[x]==0)
+                    {
+                        dfsRecur(x,adj,visited,dfs);
+                    }
+            }
+        return;
+    }
+    
+vector<int>dfsOfGraph(vector<int>adj[])
+    {
+        vector<int>visited(vertex+1,0);
+        vector<int>dfs;
+        
+        for(int i=1;i<=vertex;i++)
+            {
+                if(visited[i]==0)
+                    {
+                        dfsRecur(i,adj,visited,dfs);
+                    }
+            }
+        return dfs;
+    }
+
+void graph(int u,int v,vector<int>adj[])
+    {
+        adj[u].push_back(v);
+        adj[v].push_back(u);
+    }
+    
+int main()  
+    {
+        vector<int>adj[vertex+1];
+        
+        graph(1,2,adj);
+        graph(2,4,adj);
+        graph(2,7,adj);
+        graph(4,6,adj);
+        graph(6,7,adj);
+        graph(3,5,adj);
+        vector<int>ans = dfsOfGraph(adj);
+        for(int i=0;i<ans.size();i++)
+            cout<<ans[i]<<" ";
+        // printGraph(adj,vertex);
+        return 0;
+    }
+    
+    
+    
+    
+    
+    
+    

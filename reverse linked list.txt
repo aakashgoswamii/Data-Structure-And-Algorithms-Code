@@ -1,0 +1,74 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+class node{
+public:
+    int data;
+    node *next;
+};
+
+node *newNode(int val)
+    {
+        node *create = new node();
+        create->data = val;
+        create->next = NULL;
+        return create;
+    }
+
+void print(node *root)
+    {
+        if(root==NULL)
+            return;
+        
+        while(root!=NULL)
+            {
+                cout<<root->data<<" ";
+                root = root->next;
+            }
+    }
+
+node* reverseList(node *p)
+    {
+        node *head;
+        if(p->next==NULL)
+        {
+            head = p;
+            return head;
+        }
+        
+        head = reverseList(p->next);
+        node *q = p->next;
+        q->next = p;
+        p->next = NULL;
+        return head;
+    }
+    
+int main()
+    {
+        node *root = newNode(1);
+        root->next = newNode(2);
+        root->next->next = newNode(3);
+        root->next->next->next = newNode(4);
+        root->next->next->next->next = newNode(5);
+        cout<<"original linked list"<<endl;
+        print(root);
+        cout<<endl;
+        root = reverseList(root);
+        print(root);
+        cout<<endl;
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    

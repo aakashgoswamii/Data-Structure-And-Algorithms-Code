@@ -1,0 +1,31 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+int minOperation(vector<int>nums, int n, int X, int l , int r, int count)
+{
+	if (X == 0)
+		return count;
+
+	if (X < 0 || left > right)
+		return 1e6;
+	int left = minOperation(nums, n, X - nums[l], l + 1, r, count + 1);
+
+	// if (X >= nums[r])
+	int right = minOperation(nums, n, X - nums[r], l, r - 1, count + 1);
+	return min(left, right);
+}
+
+int main()
+{
+	vector<int>nums = {8, 3, 1, 5};
+	int n = nums.size();
+	int l = 0;
+	int r = n - 1;
+	int X = 5;
+	int count = 0;
+	if (minOperation(nums, n, X, l, r, count) < 1e6)
+		cout << minOperation(nums, n, X, l, r, count);
+	else
+		cout << -1 << endl;
+	return 0;
+}

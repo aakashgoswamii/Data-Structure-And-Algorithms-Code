@@ -1,0 +1,199 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+class node{
+public:
+    int data;
+    node *next;
+};
+
+node *newNode(int val)
+    {
+        node *create = new node();
+        create->data = val;
+        create->next = NULL;
+        return create;
+    }
+
+void print(node *root)
+    {
+        if(root==NULL)
+            return;
+        
+        while(root!=NULL)
+            {
+                cout<<root->data<<" ";
+                root = root->next;
+            }
+    }
+
+node *reverseList(node *head)
+    {
+        if(head==NULL||head->next==NULL)
+            return head;
+        
+        node *rest = reverseList(head->next);
+        head->next->next = head;
+        head->next = NULL;
+        return rest;
+    }
+node *solve(node *root,int k)
+    {
+        
+        if(root==NULL)
+            return root;
+        node *prev = NULL;
+        node *curr = root;
+        node *NEXT;
+        int i=0;
+        while(curr!=NULL&&i<k)
+        {
+            NEXT = curr->next;
+            curr->next = prev;
+            prev = curr;
+            curr = NEXT;
+            i++;
+        }
+        if(NEXT!=NULL)
+            root->next= solve(NEXT,k);
+        return prev;
+    }
+    
+int main()
+    {
+        node *root = newNode(1);
+        root->next = newNode(2);
+        root->next->next = newNode(3);
+        root->next->next->next = newNode(4);
+        root->next->next->next->next = newNode(5);
+        root->next->next->next->next->next = newNode(6);
+        root->next->next->next->next->next->next = newNode(7);
+        root->next->next->next->next->next->next->next = newNode(8);
+        cout<<"original linked list"<<endl;
+        print(root);
+        cout<<endl;
+        int k = 5;
+        root = solve(root,k);
+        print(root);
+        cout<<endl;
+    }
+    
+    
+    //////////////////////////////////////////////////////////////////////
+
+using stack:
+
+#include<bits/stdc++.h>
+using namespace std;
+
+class node{
+public:
+    int data;
+    node *next;
+};
+
+node *newNode(int val)
+    {
+        node *create = new node();
+        create->data = val;
+        create->next = NULL;
+        return create;
+    }
+
+void print(node *root)
+    {
+        if(root==NULL)
+            return;
+        
+        while(root!=NULL)
+            {
+                cout<<root->data<<" ";
+                root = root->next;
+            }
+    }
+
+node *reverseList(node *head)
+    {
+        if(head==NULL||head->next==NULL)
+            return head;
+        
+        node *rest = reverseList(head->next);
+        head->next->next = head;
+        head->next = NULL;
+        return rest;
+    }
+node *solve(node *root,int k)
+    {
+        stack<node*>s;
+        node *curr = root;
+        node *prev = NULL;
+        while(curr!=NULL){
+            int count = 0;
+            while(count<k&&curr!=NULL){
+                s.push(curr);
+                curr = curr->next;
+                count++;
+            }
+        while(!s.empty()){
+            if(prev==NULL){
+                prev = s.top();
+                root = prev;
+                s.pop();
+            }
+            else{
+                prev->next = s.top();
+                prev = prev->next;
+                s.pop();
+            }
+        }
+        
+        }
+    prev->next = NULL;
+    return root;
+    }
+    
+int main()
+    {
+        node *root = newNode(1);
+        root->next = newNode(2);
+        root->next->next = newNode(3);
+        root->next->next->next = newNode(4);
+        root->next->next->next->next = newNode(5);
+        root->next->next->next->next->next = newNode(6);
+        root->next->next->next->next->next->next = newNode(7);
+        root->next->next->next->next->next->next->next = newNode(8);
+        cout<<"original linked list"<<endl;
+        print(root);
+        cout<<endl;
+        int k = 5;
+        root = solve(root,k);
+        print(root);
+        cout<<endl;
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    

@@ -1,0 +1,36 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+void printAbbr(string str, string asf, int count, int pos) {
+
+	if (pos == str.length()) {
+		if (count == 0)
+			cout << asf << endl;
+		else
+			cout << asf + to_string(count) << endl;
+		return;
+	}
+
+	if (count > 0) {
+		printAbbr(str, asf + to_string(count) + str[pos], 0, pos + 1);
+	}
+	else {
+		printAbbr(str, asf + str[pos], 0, pos + 1);
+	}
+
+	printAbbr(str, asf, count + 1, pos + 1);
+}
+
+int main()
+{
+#ifndef ONLINE_JUDGE
+	freopen("input.txt", "r", stdin);
+	freopen("output.txt", "w", stdout);
+#endif
+
+	string str;
+	cin >> str;
+	int count = 0;
+	string asf = "";
+	printAbbr(str, asf, count, 0);
+}

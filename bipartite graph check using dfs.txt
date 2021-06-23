@@ -1,0 +1,91 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define vertex 8
+
+void print(vector<int>adj[],int n)
+    {
+        for(int i=1;i<=n;i++)
+            {
+                cout<<i<<"----->";
+                for(auto x:adj[i])
+                    {
+                        cout<<x<<" ";
+                    }
+                cout<<endl;
+            }
+        return;
+    }
+
+bool dfsBipartite(int node,vector<int>adj[],vector<int>&color)
+    {
+        if(color[node]==-1)
+            color[node] = 1;
+            
+        for(auto x:adj[node])
+            {
+                if(color[x]==-1)
+                    {
+                    color[x] = 1-color[node];
+                    if(!dfsBipartite(x,adj,color))
+                        return false;
+                    }
+                else if(color[x]==color[node])
+                    return false;
+            }
+        return true;
+    }
+    
+bool bipartiteGraph(vector<int>adj[])
+    {
+        vector<int>color(vertex+1,-1);
+        
+        for(int i=1;i<=vertex;i++)
+            {
+                if(color[i]==-1)
+                    {
+                        if(dfsBipartite(i,adj,color)==false)
+                            return false;
+                    }
+            }
+        return true;
+    }
+    
+void addEdge(int u,int v,vector<int>adj[])
+    {
+        adj[u].push_back(v);
+        adj[v].push_back(u);
+    }
+    
+int main()
+    {
+        // int vertex = 5;
+        vector<int>adj[vertex+1];
+        // for non bipartite graph example
+        
+        // addEdge(1,2,adj);
+        // addEdge(2,3,adj);
+        // addEdge(2,8,adj);
+        // addEdge(3,4,adj);
+        // addEdge(4,5,adj);
+        // addEdge(5,8,adj);
+        // addEdge(5,6,adj);
+        // addEdge(6,7,adj);
+        // for bipartite graph example
+        addEdge(1,2,adj);
+        addEdge(2,7,adj);
+        addEdge(2,3,adj);
+        addEdge(3,4,adj);
+        addEdge(4,5,adj);
+        addEdge(5,6,adj);
+        addEdge(6,7,adj);
+        addEdge(5,8,adj);
+        
+        bool ans = bipartiteGraph(adj);
+        if(ans==1)
+            cout<<"Graph is bipartite"<<endl;
+        else
+            cout<<"Graph is not bipartite"<<endl;
+        // print(adj,vertex);
+    }
+    
+    

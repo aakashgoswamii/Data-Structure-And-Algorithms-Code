@@ -1,0 +1,72 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define max_size 50
+
+class Queue
+    {
+        public:
+            int data;
+        public:
+            Queue *next;
+            Queue *front = NULL;
+            Queue *rear = NULL;
+            void enqueue(int x);
+            void print();
+            void dequeue();
+    };
+
+void Queue::print()
+    {
+        while(front!=NULL)
+            {
+                cout<<front->data<<" is enqueue from the queue"<<endl;
+                front = front->next;
+            }
+        return;
+    }
+
+void Queue::dequeue()
+    {
+        Queue *temp = front;
+        if(front==NULL||rear==NULL)
+            {
+                cout<<"queue is empty"<<endl;
+                return;
+            }
+        if(front==rear)
+           {
+               front = NULL;
+               rear = NULL;
+           }
+        else
+            front = front->next;
+    free(temp);
+    }
+
+void Queue::enqueue(int val)
+    {
+        Queue *queue = new Queue();
+        queue->data = val;
+        queue->next = NULL;
+        
+        if(front==NULL&&rear==NULL)
+           {
+               front = queue;
+               rear =  queue;
+               return;
+           }
+        rear->next = queue;
+        rear = queue;
+    }
+
+int main()
+    {
+        Queue queue;
+        queue.enqueue(10);
+        queue.enqueue(20);
+        queue.enqueue(30);
+        queue.enqueue(40);
+        queue.enqueue(50);
+        cout<<queue.front->data<<" is remove from queue"<<queue.dequeue();
+        queue.print();
+    }

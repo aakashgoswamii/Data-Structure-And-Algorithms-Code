@@ -1,0 +1,26 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+void stairPath(int n,string asf ){
+    
+    if(n<0){
+        return;
+    }
+    
+    if(n==0){
+        cout<<asf<<" ";
+        return;
+    }
+    stairPath(n-1,asf +"1");
+    stairPath(n-2,asf +"2");
+    stairPath(n-3,asf +"3");
+}
+
+int main()
+    {
+        int n;
+        cin>>n;
+        stairPath(n,"");
+    }
+
+tc : O(3^n) where n is no of stairs.

@@ -1,0 +1,107 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+class node{
+public:
+    int data;
+    node *next;
+};
+
+node *newNode(int val)
+    {
+        node *create = new node();
+        create->data = val;
+        create->next = NULL;
+        return create;
+    }
+
+
+void print(node *root)
+    {
+        if(root==NULL)
+            return;
+        
+        while(root!=NULL)
+            {
+                cout<<root->data<<" ";
+                root = root->next;
+            }
+        return;
+    }
+
+node *reverse(node **root)
+    {
+        if(root==NULL)
+            return *root;
+        
+        node *curr = *root;
+        node *prev = NULL;
+        while(curr!=NULL)
+            {
+                node *NEXT = curr->next;
+                curr->next = prev;
+                prev = curr;
+                curr = NEXT;
+            }
+            
+        *root = prev;
+        return *root;
+    }
+
+node *addOneUtil(node *root)
+    {
+        node *res = root;
+        node *temp,*prev =  NULL;
+        int carry = 1,sum;
+        
+        while(res!=NULL)
+            {
+                sum = carry+res->data;
+                carry = (sum>=10)?1:0;
+                sum = sum%10;
+                res->data = sum;
+                temp = res;
+                res = res->next;
+            }
+        if(carry>0)
+            temp->next = newNode(carry);
+        return root;
+    }
+    
+void solve(node *root)
+    {
+        root = reverse(&root);
+        root = addOneUtil(root);
+        root = reverse(&root);
+        print(root);
+    }
+    
+int main()
+    {
+        node *root = newNode(9);
+        root->next = newNode(9);
+        root->next->next = newNode(9);
+        root->next->next->next = newNode(9);
+        root->next->next->next->next = newNode(9);
+        cout<<"original linked list"<<endl;
+        print(root);
+        cout<<endl;
+        cout<<"modified linked list"<<endl;
+        solve(root);
+        cout<<endl;
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    

@@ -1,0 +1,96 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+class node {
+public:
+	int data;
+	node *left;
+	node *right;
+};
+
+node *findMin(node *root)
+{
+	while (root->left != NULL)
+		root = root->left;
+	return root;
+}
+
+node *deleteNode(node *root, int value)
+{
+	if (root == NULL)
+		return root;
+	else if (value < root->data)
+		root->left = deleteNode(root->left, value);
+	else if (value > root->data)
+		root->right = deleteNode(root->right, value);
+	else
+	{
+		//case 1: No child
+		if (root->left == NULL && root->right == NULL) {
+			delete(root);
+			root = NULL;
+		}
+
+		else if (root->left == NULL)
+		{
+			node *temp = root;
+			root = root->right;
+			delete(temp);
+		}
+		else if (root->right == NULL) {
+			node *temp = root;
+			root = root->left;
+			delete(temp);
+		}
+
+		else {
+			node *temp = findMin(root->right);
+			root->data = temp->data;
+			root->right = deleteNode(root->right, temp->data);
+		}
+	}
+	return root;
+
+}
+
+node* newNode(int value)
+{
+	node *createNode = new node();
+	createNode->data = value;
+	createNode->left = createNode->right = NULL;
+	return createNode;
+}
+
+void preorder(node *root)
+{
+	if (root == NULL)
+		return;
+
+	cout << root->data << " ";
+	preorder(root->left);
+	preorder(root->right);
+}
+
+int main()
+{
+	node *root = NULL;
+	root = newNode(12);
+	root->left = newNode(5);
+	root->right = newNode(15);
+	root->left->left = newNode(3);
+	root->left->left->left = newNode(1);
+	root->left->right = newNode(7);
+	root->left->right->right = newNode(9);
+	root->right->left = newNode(13);
+	root->right->right = newNode(17);
+	root->right->right->right = newNode(19);
+
+	cout << "bst before deleting" << endl;
+	preorder(root);
+	cout << "bst after deleteing" << endl;
+	deleteNode(root, 17);
+
+	preorder(root);
+	return 0;
+
+}

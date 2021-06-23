@@ -1,0 +1,71 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+vector<int>parent(1000);
+vector<int>ranka(1000);
+#define vertex 8
+
+
+void makeSet()
+    {
+        for(int i=1;i<vertex;i++)
+            {
+                parent[i] = i;
+                ranka[i] = 0;
+            }
+    }
+
+int findPar(int node)
+    {
+        if(node==parent[node])
+            return node;
+        
+        return parent[node] = findPar(parent[node]);
+    }
+
+void unio(int u,int v)
+    {
+        u = findPar(u);
+        v = findPar(v);
+        
+        if(ranka[u]<ranka[v])
+            {
+                parent[u] = v;
+            }
+        else if(ranka[v]<ranka[u])
+            {
+                parent[v] = u;
+            }
+        else
+            {
+                parent[v] = u;
+                ranka[u]++;
+            }
+    }
+    
+int main()
+    {
+        makeSet();
+        unio(1,2);
+        unio(2,3);
+        unio(4,5);
+        unio(6,7);
+        unio(5,6);
+        unio(3,7);
+        
+        for(int i=1;i<vertex;i++)
+            {
+                cout<<parent[i]<<" ";
+            }
+            
+        // if(findPar(4)!=findPar(2))
+        //     cout<<"diffrent component"<<endl;
+        // else
+        //     cout<<"they belong to same component"<<endl;
+    }
+    
+    
+    
+    
+    
+    

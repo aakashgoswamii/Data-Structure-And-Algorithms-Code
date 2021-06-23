@@ -1,0 +1,28 @@
+int maxNodeLevel(Node *root)
+{
+     	if(!root)
+    	   return NULL;
+    	int level = 0,count,res = 0;
+        queue<Node*>q;
+		q.push(root);
+		while(!q.empty())
+		    {
+		        int n = q.size();
+		        count = n;
+				while(n--)
+				    {
+				    Node *temp = q.front();
+					q.pop();
+					if(temp->left)
+					   q.push(temp->left);
+					if(temp->right)
+					   q.push(temp->right);
+					}
+				if(count>res)
+				{
+			    level++;
+			    res = count;
+				}
+			}
+		return level-1;
+}

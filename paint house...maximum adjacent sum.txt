@@ -1,0 +1,29 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+int solve(vector<int>arr,int n)
+    {
+        int prev_incl,prev_excl,curr_incl,curr_excl;
+        
+        prev_incl = arr[0];
+        prev_excl = 0;
+        
+        for(int i=1;i<n;i++)
+            {
+                curr_incl = arr[i] + prev_excl;
+                curr_excl = prev_incl;
+                prev_incl = curr_incl;
+                prev_excl = curr_excl;
+                cout<<curr_incl<<" "<<curr_excl;
+                cout<<endl;
+            }
+        return max(curr_incl,curr_excl);
+    }
+    
+int main()
+    {
+        vector<int>arr = {2,1,1,2};
+        int n = arr.size();
+        cout<<solve(arr,n)<<endl;
+        return 0;
+    }

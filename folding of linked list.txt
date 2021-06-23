@@ -1,0 +1,95 @@
+tc : o(n)
+s.c : o(1)
+
+#include<bits/stdc++.h>
+using namespace std;
+
+class node{
+    public:
+        int data;
+        node *next;
+};
+
+void print(node *ans){
+    while(ans!=NULL){
+        cout<<ans->data<<" ";
+        ans = ans->next;
+    }
+    return;
+}
+
+node* newNode(int value){
+    node *createNode = new node();
+    createNode->data = value;
+    createNode->next = NULL;
+    return createNode;
+}
+
+node *findMiddle(node *head){
+    if(head==NULL||head->next==NULL)
+        return head;
+        
+    node *slow = head;
+    node *fast = head;
+    
+    while(fast!=NULL&&fast->next!=NULL){
+        slow = slow->next;
+        fast = fast->next->next;
+    }
+    return slow;
+}
+
+void reverse(node **second){
+    if(*second==NULL||(*second)->next==NULL)
+        return;
+        
+    node *curr = *second;
+    node *NEXT;
+    node *prev = NULL;
+    while(curr!=NULL){
+        NEXT = curr->next;
+        curr->next = prev;
+        prev = curr;
+        curr = NEXT;
+    }
+    *second = prev;
+}
+
+
+node* solve(node *head){
+    node *mid = findMiddle(head);
+    node *second = mid->next;
+    mid->next = NULL;
+    reverse(&second);
+    node *c1 = head;
+    node *c2 = second;
+    node *f1 = NULL;
+    node *f2 = NULL;
+    
+    while(c1!=NULL&&c2!=NULL){
+        f1 = c1->next;
+        f2 = c2->next;
+        c1->next = c2;
+        c2->next = f1;
+        c1 = f1;
+        c2 = f2;
+    }
+return head;
+}
+
+int main()
+    {
+        node *head = newNode(1); 
+        head->next  = newNode(2);
+        head->next->next = newNode(3);
+        head->next->next->next = newNode(4);
+        head->next->next->next->next = newNode(5);
+        head->next->next->next->next->next = newNode(6);
+        head->next->next->next->next->next->next = newNode(7);
+        head->next->next->next->next->next->next->next = newNode(8);
+        // head->next->next->next->next->next->next->next->next = newNode('h');
+        // head->next->next->next->next->next->next->next->next->next = newNode('i');
+        
+        node *ans = solve(head);
+        print(ans);
+    }

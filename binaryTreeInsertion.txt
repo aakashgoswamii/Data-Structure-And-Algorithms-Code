@@ -1,0 +1,83 @@
+#include<bits/stdc++.h>
+#include<queue>
+using namespace std;
+struct node{
+	int data;
+	node *left,*right;
+	
+	node(int x)
+	    {
+	    	data = x;
+	    	left=right=NULL;
+		}
+};
+
+node* insertNode(node *root,int key)
+    {
+    queue<node*>q;
+	q.push(root);
+	while(!q.empty())
+	    {
+	     node *temp = q.front();
+		 q.pop();
+		if(temp==NULL){
+		  	temp=new node(key);
+		  	break;
+		  }
+		else
+		   {
+		   	q.push(temp);
+		   }
+		if(temp->left==NULL){
+			temp->left=new node(key);
+			break;
+		}
+		else
+		    {
+		    	q.push(temp->left);
+			}
+		if(temp->right==NULL)
+		    {
+		    	temp->right=new node(key);
+		    	break;
+			}
+		else
+		    q.push(temp->right);
+		}
+	return root;
+	}
+	
+void printLevelOrder(node *root)
+    {
+    if(root==NULL)
+	    return;
+	queue<node*>q;
+	q.push(root);
+	while(!q.empty())
+	    {
+	    	node *temp = q.front();
+	    	cout<<temp->data<<" ";
+	        q.pop();
+	        
+	        if(temp->left)
+	           q.push(temp->left);
+	        if(temp->right)
+	            q.push(temp->right);
+		}
+	}
+	
+int main()
+{
+    node *root = new node(7);
+	root->left=new node(8);
+	root->right=new node(12);
+	root->left->left= new node(14);
+	root->right->right=new node(16);
+	root->left->right=new node(18);
+	int key=19;
+	root = insertNode(root,key);
+	cout<<"binary tree after insertion is"<<endl;
+	printLevelOrder(root);
+	
+	return 0;	
+}

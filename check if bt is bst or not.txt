@@ -1,0 +1,87 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+class node {
+public:
+	int data;
+	node *left;
+	node *right;
+};
+
+// bool isSubtreeGreater(node *root, int value)
+// {
+// 	if (root == NULL)
+// 		return true;
+
+// 	if (root->data > value && isSubtreeGreater(root->right, value) && isSubtreeGreater(root->right, value))
+// 		return true;
+// 	else
+// 		return false;
+// }
+
+// bool isSubtreeLesser(node *root, int value)
+// {
+// 	if (root == NULL)
+// 		return true;
+
+// 	if (root->data <= value && isSubtreeLesser(root->left, value) && isSubtreeLesser(root->right, value))
+// 	{
+// 		return true;
+// 	}
+// 	else
+// 		return false;
+// }
+
+// bool bst(node *root)
+// {
+// 	if (root == NULL)
+// 		return true;
+
+// 	if (isSubtreeLesser(root->left, root->data) && isSubtreeGreater(root->right, root->data) && bst(root->right) && bst(root->left))
+// 		return true;
+// 	else
+// 		return false;
+// }
+
+
+bool isBstUtil(node *root, int minValue , int maxValue)
+{
+	if (root == NULL)
+		return true;
+
+	if (root->data > minValue && root->data < maxValue && isBstUtil(root->left, minValue, root->data) &&
+	        isBstUtil(root->right, root->data, maxValue))
+		return true;
+	else
+		return false;
+
+}
+
+
+bool isBinarySearchTree(node *root)
+{
+	return isBstUtil(root, INT_MIN, INT_MAX);
+}
+
+node* newNode(int value)
+{
+	node *createNode = new node();
+	createNode->data = value;
+	createNode->left = createNode->right = NULL;
+	return createNode;
+}
+int main()
+{
+	node *root = NULL;
+	root = newNode(4);
+	root->left = newNode(2);
+	root->right = newNode(5);
+	root->left->left = newNode(1);
+	root->left->right = newNode(3);
+
+	if (isBinarySearchTree(root) == true)
+		cout << "yes,it is bst" << endl;
+	else
+		cout << "no,it is not bst" << endl;
+	return 0;
+}

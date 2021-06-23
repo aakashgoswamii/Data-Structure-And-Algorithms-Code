@@ -1,0 +1,62 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define vertex 9
+
+
+bool checkCycle(int node,vector<int>&vis,vector<int>&dfsVis,vector<int>adj[])
+    {
+        vis[node]  = 1;
+        dfsVis[node] = 1;
+        
+        for(auto x:adj[node])
+            {
+                if(vis[x]==0)
+                    {
+                        if(checkCycle(x,vis,dfsVis,adj)==true)
+                            return true;
+                    }
+                else if(dfsVis[x]!=0)
+                    return true;
+            }
+        dfsVis[node] = false;
+        return false;
+    }
+    
+bool cycleDetect(vector<int>adj[])
+    {
+        vector<int>vis(vertex+1,0);
+        vector<int>dfsVis(vertex+1,0);
+        
+        for(int i=1;i<=vertex;i++)
+            {
+                if(checkCycle(i,vis,dfsVis,adj))
+                    return true;
+            }
+        return false;
+    }
+
+void addEdge(int u,int v,vector<int>adj[])
+    {
+        adj[u].push_back(v);
+        return;
+    }
+int main()
+    {
+        vector<int>adj[vertex+1];
+        addEdge(1,2,adj);
+        addEdge(2,3,adj);
+        addEdge(3,4,adj);
+        addEdge(4,5,adj);
+        addEdge(3,6,adj);
+        addEdge(6,5,adj);
+        addEdge(7,2,adj);
+        addEdge(7,8,adj);
+        addEdge(8,9,adj);
+        addEdge(9,7,adj);
+        
+        if(cycleDetect(adj))
+            cout<<"cycle is present"<<endl;
+        else
+            cout<<"cycle is not present"<<endl;
+        return 0;
+    }

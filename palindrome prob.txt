@@ -1,0 +1,124 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+class node{
+    public:
+        char data;
+        node *next;
+};
+
+int length(node *head)
+    {
+        int count = 0;
+        while(head!=NULL)
+            {
+                count++;
+                head = head->next;
+            }
+        return count;
+    }
+
+void reverse(node **secondHalf)
+    {
+        node *prev = NULL;
+        node *curr = *secondHalf;
+        node *nextN;
+        while(curr!=NULL)
+            {
+                nextN = curr->next;
+                curr->next = prev;
+                prev = curr;
+                curr = nextN;
+            }
+        *secondHalf = prev;
+    }
+
+bool compare(node *head,node *secondHalf)
+    {
+        while(head&&secondHalf)
+            {
+                if(head->data !=secondHalf->data)
+                   return false;
+                head = head->next;
+                secondHalf = secondHalf->next;
+            }
+        return true;
+    }
+    
+bool checkPalindrome(node *head)
+    {
+        node *slowPtr = head;
+        node *fastPtr = head;
+        node *secondHalf,*prevOfslowPtr=head;
+        node *midNode = head;
+        bool res = true;
+        
+        if(head&&head->next!=NULL)
+            {
+                while(fastPtr!=NULL&&fastPtr->next!=NULL)
+                    {
+                        fastPtr = fastPtr->next->next;
+                        prevOfslowPtr = slowPtr;
+                        slowPtr = slowPtr->next;
+                    }
+            }
+        if(fastPtr!=NULL)
+           {
+               midNode = slowPtr;
+               slowPtr = slowPtr->next;
+           }
+           
+        secondHalf = slowPtr;
+        prevOfslowPtr->next = NULL;
+        reverse(&secondHalf);
+        res = compare(head,secondHalf);
+        
+        reverse(&secondHalf);
+        
+        if(midNode!=NULL)
+            {
+                prevOfslowPtr->next = midNode;
+                midNode->next = secondHalf;
+            }
+        else
+            {
+                prevOfslowPtr->next = secondHalf;
+            }
+        return res;
+    }
+
+void printList(node *head)
+
+    {
+        while(head!=NULL)
+            {
+                cout<<head->data<<" ";
+                head = head->next;
+            }
+        return;
+    }
+void push(node **head,char value)
+    {
+        node *newNode = new node();
+        newNode->data = value;
+        newNode->next = *head;
+        *head = newNode;
+        return;
+    }
+
+int main()
+    {
+        node *head = NULL;
+        char str[] = "abacaba";
+        int i;
+        
+        for(int i=0;i<str[i]!='\0';i++)
+            {
+                push(&head,str[i]);
+            }
+        // printList(head);
+        cout<<endl;
+        checkPalindrome(head)?cout<<"yes":cout<<"no";
+        
+        return 0;
+    }

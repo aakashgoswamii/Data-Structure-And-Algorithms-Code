@@ -1,0 +1,102 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+class node{
+    public:
+        int data;
+        node *next;
+};
+
+void print(node *ans){
+    while(ans!=NULL){
+        cout<<ans->data<<" ";
+        ans = ans->next;
+    }
+    return;
+}
+
+node* newNode(int value){
+    node *createNode = new node();
+    createNode->data = value;
+    createNode->next = NULL;
+    return createNode;
+}
+
+node *findMiddle(node *head){
+    if(head==NULL||head->next==NULL)
+        return head;
+        
+    node *slow = head;
+    node *fast = head;
+    
+    while(fast!=NULL&&fast->next!=NULL){
+        slow = slow->next;
+        fast = fast->next->next;
+    }
+    return slow;
+}
+
+void reverse(node **second){
+    if(*second==NULL||(*second)->next==NULL)
+        return;
+        
+    node *curr = *second;
+    node *NEXT;
+    node *prev = NULL;
+    while(curr!=NULL){
+        NEXT = curr->next;
+        curr->next = prev;
+        prev = curr;
+        curr = NEXT;
+    }
+    *second = prev;
+}
+
+
+node* solve(node *head){
+    node *fh = head;
+    node *sh = head->next;
+    node *fp = head;
+    node *sp = head->next;
+    node *f = head->next->next;
+    while(sp!=NULL&&sp->next!=NULL){
+        fp->next = f;
+        sp->next = f->next;
+        fp = f;
+        sp = fp->next;
+        f = sp->next;
+    }
+    reverse(&sh);
+    fp->next = sh;
+    return fh;
+}
+
+int main()
+    {
+        node *head = newNode(1); 
+        head->next  = newNode(10);
+        head->next->next = newNode(2);
+        head->next->next->next = newNode(9);
+        head->next->next->next->next = newNode(3);
+        head->next->next->next->next->next = newNode(8);
+        head->next->next->next->next->next->next = newNode(4);
+        head->next->next->next->next->next->next->next = newNode(7);
+        // head->next->next->next->next->next->next->next->next = newNode(5);
+        // head->next->next->next->next->next->next->next->next->next = newNode(6);
+        
+        node *ans = solve(head);
+        print(ans);
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    

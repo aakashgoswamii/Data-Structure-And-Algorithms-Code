@@ -1,0 +1,55 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define t int t;cin>>t;while(t--)
+
+struct node{
+	int data;
+	node *left,*right;
+	node (int x)
+	    {
+	    	data = x;
+	    	left = right = NULL;
+		}
+};
+// recursive approach//
+int findHeight(node *root)
+    {
+    	if(root==NULL)
+    	   return 0;
+    	else
+    	   return 1+max(findHeight(root->left),findHeight(root->right));
+	}
+// iterative approach //
+int findHeight(node *root)
+    {
+    	int count = 0;
+        queue<node*>q;
+        q.push(root);
+        while(!q.empty())
+            {
+            int size = q.size();
+            while(size--)
+            	{
+            	node *temp = q.front();
+            	q.pop();
+            	if(temp->left!=NULL)
+            	   q.push(temp->left);
+            	if(temp->right!=NULL)
+            	   q.push(temp->right);
+                }
+                count++;
+			}
+		return count;
+	}
+int main()
+    {
+    node *root = new node(15);
+	root->left = new node(10);
+	root->right = new node(20);
+	root->left->left = new node(8);
+	root->left->right = new node(12);
+	root->right->left = new node(16);
+	root->right->right = new node(25);
+	root->right->right->right=new node(33);
+	cout<<findHeight(root);
+	}

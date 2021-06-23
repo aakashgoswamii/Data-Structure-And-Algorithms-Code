@@ -1,0 +1,63 @@
+#include<bits/stdc++.h>
+#include<queue>
+using namespace std;
+
+class node {
+public:
+	int data;
+	node *left, *right;
+};
+
+void print(stack<node*>s)
+    {
+        while(!s.empty())
+            {
+                cout<<s.top()->data<<" ";
+                s.pop();
+            }
+    }
+void postorder(node *root)
+    {
+        stack<node*>s1,s2;
+        node *curr = root;
+        s1.push(curr);
+        while(!s1.empty())
+            {
+                node *temp = s1.top();
+                s2.push(temp);
+                s1.pop();
+                if(temp->left!=NULL)
+                    {
+                        s1.push(temp->left);
+                    }
+                if(temp->right!=NULL)
+                    s1.push(temp->right);
+            }
+        print(s2);
+        return;
+    }
+    
+node* newNode(int value)
+{
+	node *createNode = new node();
+	createNode->data = value;
+	createNode->left = createNode->right = NULL;
+	return createNode;
+}
+
+int main()
+{
+	node *root = NULL;
+	root = newNode(1);
+	root->left = newNode(2);
+	root->right = newNode(3);
+	root->left->left = newNode(4);
+	root->left->right = newNode(5);
+	root->left->right->left = newNode(6);
+	root->right->right = newNode(7);
+	root->right->right->right = newNode(8);
+
+	postorder(root);
+
+	return 0;
+}

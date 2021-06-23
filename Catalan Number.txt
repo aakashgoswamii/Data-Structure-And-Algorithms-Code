@@ -1,0 +1,80 @@
+// using Dp //
+// t.c : o(n2) s.c : o(n)
+
+
+#include<bits/stdc++.h>
+using namespace std;
+
+class catalan{
+	public:
+		int findcatalan(int n)
+		{
+		    	int f[n];
+		    	f[0] = 1;
+		    	f[1] = 1;
+		    	for(int i=2;i<=n;i++)
+		    	    {
+		    	    	 f[i] = 0;
+		    	    	for(int j=0;j<i;j++)
+		    	    	    {
+		    	    	    	f[i] += f[j]*f[i-j-1];
+							}
+					}
+				return f[n];
+		    	
+			}
+};
+			 
+			 
+			 
+			 
+	   int main()
+	       {
+	       	catalan cat;
+	       	int n;
+	       	cin>>n;
+	       	cout<<cat.findcatalan(n)<<" ";
+	       	return 0;
+		   }
+
+
+// best solution ---  using binomial coefficient -----------//
+
+
+
+
+#include<bits/stdc++.h>
+using namespace std;
+
+class catalan{
+	public:
+		
+		int binom(int n,int k)
+		    {
+		    	int res = 1;
+		    	for(int i=1;i<=k;i++)
+		    	    {
+		    	    	res = res*(k+i);
+		    	    	res = res/(i);
+					}
+				return res;
+			}
+		int catalanBino(int n)
+		    {
+		    	int c = binom(2*n,n);
+		    	return c/(n+1);
+			}
+};
+			 
+			 
+			 
+			 
+	   int main()
+	       {
+	       	catalan cat;
+	       	int n;
+	       	cin>>n;
+	       	cout<<cat.catalanBino(n)<<" ";
+	       	return 0;
+		   }
+

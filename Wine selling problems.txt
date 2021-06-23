@@ -1,0 +1,44 @@
+#include<bits/stdc++.h>
+#define t  ll t;cin>>t;while(t--)
+using namespace std;
+
+#define N 1000
+
+int dp[N][N];
+
+int findmaxProfit(int price[], int s , int e , int n)
+{
+	if (dp[s][e] != -1)
+		return dp[s][e];
+	int y = n - (e - s);
+	if (s == e)
+		return price[s] * y;
+	int left = price[s] * y + findmaxProfit(price, s + 1, e, n);
+	int right = price[e] * y + findmaxProfit(price, s, e - 1, n);
+	int res = max(left, right);
+	dp[s][e] = res;
+	return dp[s][e];
+}
+
+int maxProfit(int price[], int n)
+{
+	for (int i = 0; i < n; i++)
+		for (int j = 0; j < n; j++)
+			dp[i][j] = -1;
+	int s = 0;
+	int e = n - 1;
+	return findmaxProfit(price, s, e, n);
+}
+
+int main() {
+	// Price array
+	int price[] = { 2, 4, 6, 2, 5 };
+
+	int n = sizeof(price) / sizeof(price[0]);
+
+	int ans = maxProfit(price, n);
+
+	cout << ans << endl;
+
+	return 0;
+}

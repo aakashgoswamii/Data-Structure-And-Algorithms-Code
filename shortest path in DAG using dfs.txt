@@ -1,0 +1,81 @@
+#include<bits/stdc++.h>
+#include<utility>
+using namespace std;
+#define vertex 6
+
+
+vector<int>findShortest(vector<pair<int,int>>adj[],stack<int>&s)
+    {
+        vector<int>dist(vertex,1e9);
+            
+        dist[0] = 0;
+        while(!s.empty())
+            {
+                int node = s.top();
+                s.pop();
+            if(dist[node]!=INT_MAX){
+                for(auto x:adj[node])
+                    {
+                        if(dist[x.first]>dist[node]+x.second){
+                            dist[x.first] = dist[node] + x.second;
+                        }
+                    }
+            }
+        }
+        return dist;
+    }
+    
+    
+void toposort(int node,vector<int>&vis,vector<pair<int,int>>adj[],stack<int>&s)
+    {
+        vis[node] = 1;
+        
+        for(auto x:adj[node])
+            {
+                if(vis[x.first]==0)
+                    {
+                        toposort(x.first,vis,adj,s);
+                    }
+            }
+        s.push(node);
+        return;
+    }
+    
+vector<int>shortestPath(vector<pair<int,int>>adj[])
+    {
+        vector<int>vis(vertex,0);
+        stack<int>s;
+        for(int i=0;i<vertex;i++)
+            {
+                if(vis[i]==0)
+                    toposort(i,vis,adj,s);
+            }
+        return findShortest(adj,s);
+    }
+
+void addEdge(int u,int v,int wt,vector<pair<int,int>>adj[])
+    {
+        adj[u].push_back({v,wt});
+        return;
+    }
+    
+int main()
+    {
+        vector<pair<int,int>>adj[vertex];
+        addEdge(0,1,2,adj);
+        addEdge(1,2,3,adj);
+        addEdge(2,3,6,adj);
+        addEdge(0,4,1,adj);
+        addEdge(4,2,2,adj);
+        addEdge(4,5,4,adj);
+        addEdge(5,3,1,adj);
+    
+        vector<int>ans = shortestPath(adj);
+        
+        for(int i=0;i<ans.size();i++)
+            {
+                cout<<ans[i]<<" ";
+            }
+        return 0;
+    }
+    

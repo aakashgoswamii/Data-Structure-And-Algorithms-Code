@@ -1,0 +1,54 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+class node{
+    public:
+        int data;
+        node *next;
+};
+
+void deleteList(node **head)
+    {
+        node *curr = *head;
+        node *nextN;
+        while(curr!=NULL)
+            {
+                nextN = curr->next;
+                free(curr);
+                curr = nextN;
+            }
+        *head = NULL;
+    }
+
+void printNode(node *head)
+    {
+        if(head == NULL)
+           cout<<"Linked list is empty now"<<endl;
+        while(head!=NULL)
+            {
+                cout<<head->data<<" ";
+                head = head->next;
+            }
+        return;
+    }
+
+void push(node **head,int value)
+    {
+        node *newNode = new node();
+        newNode->data = value;
+        newNode->next = *head;
+        *head = newNode;
+    }
+
+int main()
+    {
+        node *head = NULL;
+        push(&head,12);
+        push(&head,14);
+        push(&head,16);
+        push(&head,18);
+        push(&head,20);
+        deleteList(&head);
+        printNode(head);
+        return 0;
+    }

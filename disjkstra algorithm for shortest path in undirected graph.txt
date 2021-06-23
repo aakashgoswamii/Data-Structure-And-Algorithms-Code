@@ -1,0 +1,51 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define vertex 6
+
+vector<int>dijkstra(vector<pair<int,int>>adj[],int src)
+    {
+        vector<int>dist(vertex,1e9);
+        dist[src] = 0;
+        
+        priority_queue<pair<int,int>,vector<pair<int,int>>,greater<pair<int,int>>>pq;
+        pq.push({0,src});
+        
+        while(!pq.empty())
+            {
+                int dis = pq.top().first;
+                int node = pq.top().second;
+                pq.pop();
+                
+                for(auto x:adj[node])
+                    {
+                        if(dist[x.first]>dist[node] + x.second)
+                        {
+                            dist[x.first] = dist[node] + x.second;
+                            pq.push(make_pair(dist[x.first],x.first));
+                        }
+                    }
+            }
+        return dist;
+    }
+
+void addEdge(int u,int v,int wt,vector<pair<int,int>>adj[])
+    {
+        adj[u].push_back({v,wt});
+        adj[v].push_back({u,wt});
+    }
+int main()
+    {
+        vector<pair<int,int>>adj[vertex];
+        addEdge(1,2,2,adj);
+        addEdge(2,5,5,adj);
+        addEdge(1,4,1,adj);
+        addEdge(4,3,3,adj);
+        addEdge(3,5,1,adj);
+        addEdge(2,3,4,adj);
+        
+        vector<int>ans = dijkstra(adj,1);
+        
+        for(int i=1;i<ans.size();i++)
+            cout<<ans[i]<<" ";
+        return 0;
+    }

@@ -1,0 +1,105 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+class node{
+public:
+    int data;
+    node *next;
+};
+
+node *newNode(int val)
+    {
+        node *create = new node();
+        create->data = val;
+        create->next = NULL;
+        return create;
+    }
+
+
+void print(node *root)
+    {
+        if(root==NULL)
+            return;
+        
+        while(root!=NULL)
+            {
+                cout<<root->data<<" ";
+                root = root->next;
+            }
+        return;
+    }
+
+void push(node **head_ref,int value)
+    {
+        node *createNode = new node();
+        createNode->data = value;
+        createNode->next = *head_ref;
+        *head_ref = createNode;
+    }
+    
+node *intersection(node *root1,node *root2)
+    {
+        if(root1==NULL)
+            return root2;
+        
+        if(root2==NULL)
+            return root1;
+        
+        node dummy;
+        node *tail = &dummy;
+        tail->next = NULL;
+        node *curr1 = root1;node *curr2 = root2;
+        while(curr1!=NULL&&curr2!=NULL)
+            {
+                if(curr1->data==curr2->data)
+                    {
+                        push((&tail->next),curr1->data);
+                        tail = tail->next;
+                        curr1 = curr1->next;
+                        curr2 = curr2->next;
+                    }
+                else if(curr1->data>curr2->data)
+                    {
+                        curr2 = curr2->next;
+                    }
+                else
+                    curr1 = curr1->next;
+            }
+        return (dummy.next);
+    }
+    
+int main()
+    {
+        node *root1 = newNode(1);
+        root1->next = newNode(2);
+        root1->next->next = newNode(3);
+        root1->next->next->next = newNode(4);
+        root1->next->next->next->next = newNode(6);
+        
+        node *root2 = newNode(2);
+        root2->next = newNode(4);
+        root2->next->next = newNode(6);
+        root2->next->next->next = newNode(8);
+    
+        cout<<"intersection of two linked list :"<<endl;
+        node *res;
+        res = intersection(root1,root2);
+        print(res);
+        cout<<endl;
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    

@@ -1,0 +1,196 @@
+#include<bits/stdc++.h>
+#include<queue>
+#include<map>
+using namespace std;
+
+class node {
+public:
+	int data;
+	node *left, *right;
+};
+
+void topView(node *root,map<int,pair<int,int>>&mp,int dist,int level)
+    {
+        if(root==NULL)
+            return;
+        
+        if(mp.count(dist)==0||mp[dist].second>level)
+            mp[dist] = make_pair(root->data,level);
+        
+        topView(root->left,mp,dist-1,level+1);
+        topView(root->right,mp,dist+1,level+1);
+    }
+
+void bottomView(node *root,map<int,pair<int,int>>&mp,int dist,int level)
+    {
+        if(root==NULL)
+            return;
+        
+        if(mp.count(dist)==0||mp[dist].second<level)
+            mp[dist] = make_pair(root->data,level);
+        
+        bottomView(root->left,mp,dist-1,level+1);
+        bottomView(root->right,mp,dist+1,level+1);
+    }
+    
+node* newNode(int value)
+{
+	node *createNode = new node();
+	createNode->data = value;
+	createNode->left = createNode->right = NULL;
+	return createNode;
+}
+
+int main()
+{
+	node *root = NULL;
+	root = newNode(4);
+	root->left = newNode(5);
+	root->right = newNode(2);
+	root->right->left = newNode(3);
+	root->right->right = newNode(1);
+	root->right->left->left = newNode(6);
+	root->right->left->right = newNode(7);
+	
+	map<int,pair<int,int>>mp;
+	cout<<"top view of binary tree is"<<endl;
+	topView(root,mp,0,0);
+	
+	for(auto itr:mp)
+	    {
+	        cout<<itr.second.first<<" ";
+	    }
+	 
+	mp.clear();
+	
+	cout<<endl;
+	cout<<"Bottom view of binary tree is"<<endl;
+	
+	bottomView(root,mp,0,0);
+	
+	for(auto itr:mp)
+	    {
+	        cout<<itr.second.first<<" ";
+	    }
+	 
+	 
+	return 0;
+}
+
+
+// Iterative Approach :
+
+#include<bits/stdc++.h>
+#include<queue>
+#include<map>
+using namespace std;
+
+class node {
+public:
+	int data;
+	node *left, *right;
+};
+
+void topView(node *root)
+    {
+        if(root==NULL)
+            return;
+        queue<pair<node*,int>>q; // for storing node and distance from center
+        q.push({root,0});         
+        map<int,int>mp;
+        
+        while(!q.empty())
+            {
+                node *curr = q.front().first;
+                int dist = q.front().second;
+                q.pop();
+                
+                if(mp.count(dist)==0)
+                    mp[dist] = curr->data;
+                
+                if(curr->left!=NULL)
+                    q.push({curr->left,dist-1});
+                
+                if(curr->right!=NULL)
+                    q.push({curr->right,dist+1});
+            }
+        	
+	for(auto itr:mp)
+	    {
+	        cout<<itr.second<<" ";
+	    }
+    }
+
+void bottomView(node *root)
+    {
+         if(root==NULL)
+            return;
+        queue<pair<node*,int>>q; // for storing node and distance from center
+        q.push({root,0});         
+        map<int,int>mp;
+        
+        while(!q.empty())
+            {
+                node *curr = q.front().first;
+                int dist = q.front().second;
+                q.pop();
+  
+                mp[dist] = curr->data;
+                
+                if(curr->left!=NULL)
+                    q.push({curr->left,dist-1});
+                
+                if(curr->right!=NULL)
+                    q.push({curr->right,dist+1});
+            }
+        	
+	for(auto itr:mp)
+	    {
+	        cout<<itr.second<<" ";
+	    }
+    }
+    
+node* newNode(int value)
+{
+	node *createNode = new node();
+	createNode->data = value;
+	createNode->left = createNode->right = NULL;
+	return createNode;
+}
+
+int main()
+{
+	node *root = NULL;
+	root = newNode(4);
+	root->left = newNode(5);
+	root->right = newNode(2);
+	root->right->left = newNode(3);
+	root->right->right = newNode(1);
+	root->right->left->left = newNode(6);
+	root->right->left->right = newNode(7);
+	
+	cout<<"top view of binary tree is"<<endl;
+	topView(root);
+
+	
+	cout<<endl;
+	cout<<"Bottom view of binary tree is"<<endl;
+	
+	bottomView(root);
+	 
+	return 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+

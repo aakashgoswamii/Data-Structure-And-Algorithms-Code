@@ -1,0 +1,126 @@
+#include<bits/stdc++.h>
+#define t int t;cin>>t;while(t--)
+using namespace std;
+
+class node {
+public:
+	int data;
+	node *left;
+	node *right;
+};
+
+int findMini(node *root)
+{
+	if (root == NULL) {
+		cout << "Tree is empty" << endl;
+		return -1;
+	}
+	else if (root->left == NULL)
+		return root->data;
+	else
+		return findMini(root->left);
+
+}
+
+int findMaxIter(node *root)
+{
+	if (root == NULL)
+	{
+		cout << "Tree is empty" << endl;
+		return -1;
+	}
+
+	while (root->right != NULL)
+	{
+		root = root->right;
+	}
+	return root->data;
+}
+
+int findMinIter(node *root)
+{
+	if (root == NULL)
+	{
+		cout << "Tree is empty" << endl;
+		return -1;
+	}
+
+	while (root->left != NULL)
+		root = root->left;
+	return root->data;
+}
+
+int findMax(node *root)
+{
+	if (root == NULL)
+		return 0;
+	else if (root->right == NULL)
+		return root->data;
+	else
+		return findMax(root->right);
+}
+
+node *getNewNode(int val)
+{
+	node *newNode = new node();
+	newNode->data = val;
+	newNode->left = newNode->right = NULL;
+	return newNode;
+}
+
+bool search(node *rootptr, int value)
+{
+	if (rootptr == NULL)
+		return false;
+
+	else if (rootptr->data == value)
+		return true;
+
+	else if (rootptr->data > value)
+		return search(rootptr->left, value);
+	else
+		return search(rootptr->right, value);
+}
+node *insert(node *rootptr, int val)
+{
+	if (rootptr == NULL)
+		rootptr = getNewNode(val);
+	else if (val <= rootptr->data) {
+		rootptr->left = insert(rootptr->left, val);
+	}
+	else
+	{
+		rootptr->right = insert(rootptr->right, val);
+	}
+	return rootptr;
+}
+
+
+int main()
+{
+#ifndef ONLINE_JUDGE
+	freopen("input.txt", "r", stdin);
+	freopen("output.txt", "w", stdout);
+#endif
+
+	node *root = NULL;
+	root = insert(root, 15);
+	root = insert(root, 10);
+	root = insert(root, 20);
+	root = insert(root, 1);
+	root = insert(root, 34);
+	root = insert(root, 14);
+	root = insert(root, 43);
+	root = insert(root, 51);
+	root = insert(root, 0);
+
+	// cout << "minimum element is " << findMini(root) << "and maximum element is " << findMax(root) << endl;
+	// printBst(root);
+	// if (search(root, 200) == true)
+	// 	cout << "found" << endl;
+	// else
+	// 	cout << "not found" << endl;
+
+	cout << "minimum element is " << findMinIter(root) << "and maximum element is " << findMaxIter(root) << endl;
+	return 0;
+}

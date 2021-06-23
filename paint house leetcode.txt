@@ -1,0 +1,35 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+int solve(vector<vector<int>>arr,int row,int col)
+    {
+        int prev_red = arr[0][0];
+        int prev_blue = arr[1][0];
+        int prev_green = arr[2][0];
+        int curr_red,curr_blue,curr_green;
+        
+        for(int i=1;i<col;i++)
+            {
+                curr_red = arr[0][i] + min(prev_blue,prev_green);
+                curr_blue = arr[1][i] + min(prev_red,prev_green);
+                curr_green = arr[2][i] + min(prev_red,prev_blue);
+                
+                prev_red = curr_red;
+                prev_green = curr_green;
+                prev_blue = curr_blue;
+            }
+        return min(curr_red,min(curr_blue,curr_green));
+    }
+    
+int main()
+    {
+        vector<vector<int>>arr={{1,2,3,3,5},
+                                {1,4,6,1,8},
+                                {2,3,7,2,5}
+        };
+        
+        int row = arr.size();
+        int col = arr[0].size();
+        cout<<solve(arr,row,col)<<endl;
+        return 0;
+    }

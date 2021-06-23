@@ -1,0 +1,21 @@
+#include<bits/stdc++.h>
+using namespace std;
+int main()
+    {
+        vector<pair<int,int>>chain = {{5,24},{39,60},{15,28},{27,40},{50,90},{52,56},{10,20},{65,78}};
+        
+        int n = chain.size();
+        sort(chain.begin(),chain.end());
+        
+        // {5,24} {15,28} {27,40} {39,60} {50,90}
+        
+        vector<int>dp(n,1);
+        
+        for(int i=1;i<n;i++)
+            {
+                for(int j=0;j<i;j++){
+                    if(chain[i].first>chain[j].second && dp[i]<=dp[j])
+                       dp[i] = 1+dp[j];}
+            }
+        cout<<*max_element(dp.begin(),dp.end())<<endl;
+    }

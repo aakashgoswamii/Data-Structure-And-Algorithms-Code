@@ -1,0 +1,76 @@
+#include<bits/stdc++.h>
+#define t int t;cin>>t;while(t--)
+using namespace std;
+
+int knapsack(vector<int>&val, vector<int>&wt, int w, int n)
+{
+	if (w == 0 || n == 0)
+		return 0;
+
+	if (wt[n - 1] > w)
+		return knapsack(val, wt, w, n - 1);
+
+	else
+		return max(knapsack(val, wt, w, n - 1), val[n - 1] + knapsack(val, wt, w - wt[n - 1], n - 1));
+}
+
+
+int main()
+{
+#ifndef ONLINE_JUDGE
+	freopen("input.txt", "r", stdin);
+	freopen("output.txt", "w", stdout);
+#endif
+
+	vector<int>val = {60, 100, 120};
+	vector<int>wt = {10, 20, 30};
+	int w = 50;
+	int n = val.size();
+	cout << "max total value is " << knapsack(val, wt, w, n);
+	return 0;
+}
+
+
+
+approach 2::::::::::::::::::::::::::::::::::::::::::::::::::::::::: using memoization :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+#include<bits/stdc++.h>
+using namespace std;
+
+
+int solve(vector<int>&val, vector<int>&wt, int W, int n , vector<vector<int>>dp)
+{
+	if (W == 0 || n == 0)
+		return 0;
+
+	if (dp[n - 1][W] != -1)
+		return dp[n - 1][W];
+
+	if (wt[n - 1] > W)
+	{
+		dp[n - 1][W] = solve(val, wt, W, n - 1, dp);
+		return dp[n - 1][W];
+	}
+
+	else
+	{
+		dp[n - 1][W] = max(val[n - 1] + solve(val, wt, W - wt[n - 1], n - 1, dp), solve(val, wt, W, n - 1, dp));
+		return dp[n - 1][W];
+	}
+}
+
+int knapsack(vector<int>&val, vector<int>&wt, int W, int n)
+{
+	vector<vector<int>>dp(n + 1, vector<int>(W + 1, -1));
+	return solve(val, wt, W, n, dp);
+}
+
+int main()
+{
+	vector<int>val = {60, 100, 120};
+	vector<int>wt = {10, 20, 20};
+	int W = 50;
+	int n = val.size();
+	cout << knapsack(val, wt, W, n);
+	return 0;
+}

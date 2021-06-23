@@ -1,0 +1,77 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+struct node{
+	int data;
+	node *left,*right;
+	node(int x)
+	   {
+	   	data = x;
+	   	left = right = NULL;
+	   }
+};
+
+void solve(node *root)
+    {
+    	if(!root)
+    	   return;
+    	if(root->left!=NULL&&root->right!=NULL)
+    	   {
+    	   	solve(root->left);
+    	   	solve(root->right);
+		   }
+		if(root->left==NULL&&root->right!=NULL)
+		   {
+		   	cout<<root->right->data<<" ";
+		   	solve(root->right);
+		   }
+		if(root->right==NULL&&root->left!=NULL)
+		   {
+		   	cout<<root->left->data<<" ";
+		   	solve(root->left);
+		   }
+	}
+//recursive approch//
+void printSibling(Node* root)
+{
+   queue<struct Node *>q;
+   q.push(root);
+   vector<int>v;
+   while(!q.empty())
+   {
+       int count=q.size();
+       while(count>0)
+       {
+           struct Node *temp=q.front();
+           q.pop();
+           if(temp->left!=NULL && temp->right==NULL)
+                 v.push_back(temp->left->data);
+           if(temp->left) q.push(temp->left);
+           if(temp->right!=NULL && temp->left==NULL)
+                v.push_back(temp->right->data);
+            if(temp->right)q.push(temp->right);
+            count--;
+       }
+   }
+   if(v.size()==0)
+   cout<<"-1";
+   else
+   {
+       sort(v.begin(),v.end());
+       for(int i=0;i<v.size();i++)
+       cout<<v[i]<<" ";
+   }
+}
+
+int main()
+    {
+    	node *root = new node(1);
+    	root->left = new node(10);
+    	root->right = new node(39);
+    	root->left->right = new node(22);
+    	root->left->left = new node(5);
+    	root->left->left->right = new node(12);
+    	root->left->left->left = new node(19);
+    	solve(root);
+    	return 0;
+	}

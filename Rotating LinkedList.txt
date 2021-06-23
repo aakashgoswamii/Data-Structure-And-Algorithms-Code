@@ -1,0 +1,126 @@
+//cpp program to clockwise rotation of linked list//
+#include<bits/stdc++.h>
+using namespace std;
+
+struct node{
+	int data;
+	node *next;
+};
+
+void print(node *head)
+    {
+    	if(!head)
+    	   return;
+    	while(head)
+    	    {
+    	    	cout<<head->data<<" ";
+    	    	head = head->next;
+			}
+	}
+int count(node *head)
+    {
+    	int cnt = 0;
+    	node *temp = head;
+    	if(!temp)
+    	   return 0;
+    	while(temp!=NULL)
+    	    {
+    	    	cnt++;
+    	    	temp = temp->next;
+			}
+		return cnt;
+	}
+
+node *rightRotate(node *head,int k)
+    {
+    if(!head)
+	    return head;
+	node *temp = head;
+	while(temp->next!=NULL)
+	    temp = temp->next;
+	    
+	int len = count(head);
+	if(k>len)
+	   k = k%len;
+	k = len-k;
+	if(k==0||k==len)
+	   return head;
+	node *curr = head;
+	int cnt = 1;
+	while(cnt<k&&curr!=NULL)
+	    {
+	    	curr = curr->next;
+	    	cnt++;
+		}
+		
+		if(curr==NULL)
+		   return head;
+		
+		node *kthnode = curr;
+		temp->next = head;
+		head = kthnode->next;
+		kthnode->next = NULL;
+		return head;
+	}
+
+//my method//			
+void rotate1(node *head,int k)
+    {
+    	int n = count(head);
+    	node *prev=head;
+    	node *temp = head;
+    	node *Next = NULL;
+    	if(k>n)
+    	   {
+    	   	while(prev!=NULL)
+    	   	    {
+    	   	    cout<<prev->data<<" ";
+				   prev = prev->next;	
+				}
+			return;
+		   }
+    	for(int i=0;i<n-k-1;i++)
+    	    {
+    	    	temp = temp->next;
+			}
+		Next = temp->next;
+		temp->next=NULL;
+		while(Next!=NULL)
+		    {
+		    	cout<<Next->data<<" ";
+		    	Next = Next->next;
+			}
+		while(prev!=NULL)
+		    {
+		    	cout<<prev->data<<" ";
+		    	prev = prev->next;
+			}
+		return;
+	}
+	
+	
+void push(node **head,int key)
+    {
+    	node *newNode = new node();
+    	newNode->data = key;
+    	newNode->next = *head;
+    	*head = newNode;
+	}
+	
+	
+int main()
+    {
+    	node *head = NULL;
+    	push(&head,5);
+    	push(&head,3);
+    	push(&head,13);
+    	push(&head,11);
+    	push(&head,9);
+    	push(&head,7);
+    	int k = 4;
+    	head = rightRotate(head,k);
+    	
+    	print(head);
+    	
+    	return 0;
+	}

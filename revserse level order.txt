@@ -1,0 +1,59 @@
+#include<bits/stdc++.h>
+#include<queue>
+using namespace std;
+
+class node {
+public:
+	int data;
+	node *left, *right;
+};
+
+void printLevelOrder(node *root)
+{
+	stack<node*>s;
+	queue<node*>q;
+	q.push(root);
+
+	while (!q.empty()) {
+		node *temp = q.front();
+		s.push(temp);
+		q.pop();
+
+		if (temp->right != NULL)
+			q.push(temp->right);
+
+		if (temp->left != NULL)
+			q.push(temp->left);
+	}
+
+	while (!s.empty()) {
+		node *d = s.top();
+		cout << d->data << " ";
+		s.pop();
+	}
+	return;
+}
+
+node* newNode(int value)
+{
+	node *createNode = new node();
+	createNode->data = value;
+	createNode->left = createNode->right = NULL;
+	return createNode;
+}
+
+int main()
+{
+	node *root = NULL;
+	root = newNode(4);
+	root->left = newNode(5);
+	root->right = newNode(2);
+	root->right->left = newNode(3);
+	root->right->right = newNode(1);
+	root->right->left->left = newNode(6);
+	root->right->left->right = newNode(7);
+
+	printLevelOrder(root);
+
+	return 0;
+}

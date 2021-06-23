@@ -1,0 +1,173 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+class node{
+public:
+    int data;
+    node *next;
+};
+
+node *newNode(int val)
+    {
+        node *create = new node();
+        create->data = val;
+        create->next = NULL;
+        return create;
+    }
+
+void print(node *root)
+    {
+        if(root==NULL)
+            return;
+        
+        while(root!=NULL)
+            {
+                cout<<root->data<<" ";
+                root = root->next;
+            }
+        return;
+    }
+void removeDuplicate(node *root)
+    {
+        if(root==NULL)
+            return;
+        
+        node *curr = root;
+        
+        while(curr!=NULL)
+            {
+                node *inner = curr;
+                while(inner->next!=NULL)
+                    {
+                        if(curr->data==inner->next->data)
+                            {
+                                node *dup = inner->next;
+                                inner->next = inner->next->next;
+                                delete(dup);
+                            }
+                        else
+                            inner = inner->next;
+                    }
+                curr = curr->next;
+            }
+        print(root);
+    }
+    
+int main()
+    {
+        node *root = newNode(1);
+        root->next = newNode(2);
+        root->next->next = newNode(3);
+        root->next->next->next = newNode(4);
+        root->next->next->next->next = newNode(1);
+        root->next->next->next->next->next = newNode(6);
+        root->next->next->next->next->next->next = newNode(3);
+        root->next->next->next->next->next->next->next = newNode(2);
+        root->next->next->next->next->next->next->next->next = newNode(3);
+        cout<<"original linked list"<<endl;
+        print(root);
+        cout<<endl;
+        removeDuplicate(root);
+        cout<<endl;
+    }
+    
+    
+    
+    
+    #include<bits/stdc++.h>
+using namespace std;
+
+class node{
+public:
+    int data;
+    node *next;
+};
+
+node *newNode(int val)
+    {
+        node *create = new node();
+        create->data = val;
+        create->next = NULL;
+        return create;
+    }
+
+void print(node *root)
+    {
+        if(root==NULL)
+            return;
+        
+        while(root!=NULL)
+            {
+                cout<<root->data<<" ";
+                root = root->next;
+            }
+        return;
+    }
+void removeDuplicate(node *root)
+    {
+        if(root==NULL)
+            return;
+        
+        unordered_set<int>s;
+        node *curr = root;
+        node *prev = NULL;
+        while(curr!=NULL)
+            {
+                if(s.find(curr->data)!=s.end())
+                    {
+                        prev->next = curr->next;
+                        delete(curr);
+                    }
+                else
+                    {
+                        s.insert(curr->data);
+                        prev = curr;
+                    }
+                curr = prev->next;
+            }
+            
+        print(root);
+    }
+    
+int main()
+    {
+        node *root = newNode(1);
+        root->next = newNode(2);
+        root->next->next = newNode(3);
+        root->next->next->next = newNode(4);
+        root->next->next->next->next = newNode(1);
+        root->next->next->next->next->next = newNode(6);
+        root->next->next->next->next->next->next = newNode(3);
+        root->next->next->next->next->next->next->next = newNode(2);
+        root->next->next->next->next->next->next->next->next = newNode(3);
+        cout<<"original linked list"<<endl;
+        print(root);
+        cout<<endl;
+        removeDuplicate(root);
+        cout<<endl;
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    

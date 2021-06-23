@@ -1,0 +1,38 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define vertex 5
+
+void print(int adj[][vertex+1],int n)
+    {
+        for(int i=0;i<n;i++)
+            {
+                for(int j = 0;j<n;j++)
+                    {
+                        cout<<adj[i][j]<<" ";
+                    }
+                cout<<endl;
+            }
+        return;
+    }
+    
+void addEdge(int u,int v,int adj[][vertex+1])
+    {
+        adj[u][v] = 1;
+        adj[v][u] = 1;
+    }
+    
+int main()
+    {
+        // int vertex = 5;
+        int adj[vertex+1][vertex+1] = {0};
+        
+        addEdge(1,2,adj);
+        addEdge(2,4,adj);
+        addEdge(4,3,adj);
+        addEdge(2,3,adj);
+        addEdge(1,3,adj);
+        addEdge(1,5,adj);
+        addEdge(5,3,adj);
+        
+        print(adj,vertex+1);
+    }

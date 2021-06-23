@@ -1,0 +1,119 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+class node{
+    public:
+        int data;
+        node *next;
+};
+
+void print(node *root)
+    {
+        if(root==NULL)
+            return;
+        while(root!=NULL)
+            {
+                cout<<root->data<<" ";
+                root = root->next;
+            }
+        return;
+    }
+
+void reverse(node **secondList)
+    {
+        node *curr = *secondList;
+        node *prev = NULL;
+        while(curr!=NULL)
+            {
+                node *NEXT = curr->next;
+                curr->next = prev;
+                prev = curr;
+                curr = NEXT;
+            }
+        *secondList = prev;
+    }
+
+bool compare(node *root1,node *root2)
+    {
+        while(root1!=NULL&&root2!=NULL)
+            {
+                if(root1->data!=root2->data)
+                    return false;
+                root1 = root1->next;
+                root2 = root2->next;
+            }
+        return true;
+    }
+    
+void checkPalindrome(node *root1)
+    {
+        if(root1==NULL)
+            return;
+        
+        node *slow = root1;
+        node *fast = root1;
+        node *prev = NULL;
+        while(fast!=NULL&&fast->next!=NULL)
+            {
+                fast = fast->next->next;
+                prev = slow;
+                slow = slow->next;
+            }
+        node *middle = NULL;
+        if(fast!=NULL)
+            {
+                middle = slow;
+                slow = slow->next;
+            }
+        prev->next = NULL;  // root1->1->1->4->NULL
+        node *secondList = slow;
+        reverse(&secondList);
+        bool com = compare(root1,secondList);
+        if(com==true)
+            cout<<"list is palindrome"<<endl;
+        else
+            cout<<"list is not palindrome"<<endl;
+        
+        reverse(&secondList);
+        if(middle!=NULL)
+            {
+                prev->next = middle;
+                middle->next = secondList;
+            }
+        else
+            {
+                prev->next = secondList;
+            }
+        
+    }
+    
+node *newNode(int value)
+
+    {
+        node *createNode = new node();
+        createNode->data = value;
+        createNode->next = NULL;
+        return createNode;
+    }
+    
+int main()
+    {
+        node *root1 = newNode(1);
+        root1->next = newNode(1);
+        root1->next->next = newNode(2);
+        root1->next->next->next = newNode(2);
+        root1->next->next->next->next = newNode(12);
+        root1->next->next->next->next->next = newNode(1);
+        // root1->next->next->next->next->next->next = newNode(1);
+        checkPalindrome(root1);
+        return 0;
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    

@@ -1,0 +1,104 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define max_size 50
+
+class Queue
+    {
+        private:
+            int arr[max_size];
+            int front,rear;
+        
+        public:
+            Queue()
+                {
+                    rear = -1;
+                    front = -1;
+                }
+            bool isFull();
+            void print();
+            bool isEmpty();
+            void dequeue(int val);
+            void enqueue(int val);
+        
+    };
+
+void Queue::print()
+    {
+        while(front<=rear)
+            {
+                cout<<arr[front]<<endl;
+                front = front+1;
+            }
+        return;
+    }
+
+bool Queue::isFull()
+    {
+        if(rear == max_size-1)
+           return true;
+        return false;
+    }
+    
+bool Queue::isEmpty()
+    {
+        if(rear==-1||front==-1)
+           return true;
+        return false;
+    }
+
+void Queue::dequeue(int val)
+    {
+        if(isEmpty())
+           {
+               cout<<"queue is empty"<<endl;
+               return;
+           }
+        if(front==rear)
+           front = rear = -1;
+        front = (front+1)%max_size;
+    }
+
+void Queue::enqueue(int val)
+    {
+        if(isFull())
+           {
+               cout<<"queue is full"<<endl;
+               return;
+           }
+        else if(isEmpty())
+           {
+               rear = 0;
+               front = 0;
+           }
+        else
+            rear = rear+1;
+        
+        arr[rear] = val;
+        return;
+    }
+int main()
+    {
+        Queue queue;
+        queue.enqueue(50);
+        queue.enqueue(40);
+        queue.enqueue(30);
+        queue.enqueue(20); 
+        queue.enqueue(10); 
+        queue.print();
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    

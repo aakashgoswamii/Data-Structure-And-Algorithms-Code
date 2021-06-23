@@ -1,0 +1,71 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+struct node{
+	int data;
+	node *next;
+};
+
+void push(node **head,int key)
+    {
+    	node *newNode = new node();
+    	newNode->data = key;
+    	newNode->next = *head;
+    	*head = newNode;
+	}
+
+node* solve(node *head,int key)
+    {
+    	node *p = head;
+    node *q = head;//2->3->1->7->12->18->21->24->NULL
+    	for(int i=0;i<=key;i++)
+    	    {
+    	    	q = q->next;
+			}
+		while(q->next!=NULL)
+		    {
+		    	p = p->next;
+		    	q = q->next;
+		    	
+			}
+		p->next = p->next->next;
+		return head;
+	}
+
+void print(node *head)
+  {
+  	while(head!=NULL)
+  	    {
+  	    cout<<head->data<<" ";
+		head = head->next;	
+		}
+  }
+  
+void reverse(node **head)
+    {
+    	node *curr = *head,*prev=NULL,*next = NULL;
+    	while(curr!=NULL)
+    	    {
+    	    	next = curr->next;
+    	    	curr->next = prev;
+    	    	prev = curr;
+    	    	curr = next;
+			}
+		*head = prev;
+	}
+int main()
+    {
+      node *head = NULL;
+      
+      push(&head,24);
+      push(&head,21);
+      push(&head,18);
+	  push(&head,12);
+	  push(&head,1);
+	  push(&head,3);
+	  push(&head,2); //  2->3->1->12->18->21->24->NULL
+	  int key = 1;
+	  head = solve(head,key);
+	  print(head);
+	  return 0;	
+	}

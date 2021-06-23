@@ -1,0 +1,64 @@
+#include<bits/stdc++.h>
+#include<queue>
+#include<vector>
+using namespace std;
+
+class node {
+public:
+	char data;
+	node *left, *right;
+};
+
+void diagnalTraversal(node *root)
+    {
+        if(root==NULL)
+            return;
+            
+        unordered_map<int,vector<char>>ump;
+        queue<pair<node*,int>>q;
+        q.push({root,0});
+        int maxDD = 0;
+        
+        while(!q.empty())
+            {
+                node *curr = q.front().first;
+                int dd = q.front().second;
+                q.pop();
+                maxDD = max(maxDD,dd);
+                ump[dd].emplace_back(curr->data);
+                if(curr->left!=NULL)
+                    q.push({curr->left,dd+1});
+                if(curr->right!=NULL)
+                    q.push({curr->right,dd});
+            }
+        for(int i=0;i<=maxDD;i++)
+            {
+                for(auto itr:ump[i])
+                    {
+                        cout<<itr<<" ";
+                    }
+            }
+    }
+    
+node* newNode(int value)
+{
+	node *createNode = new node();
+	createNode->data = value;
+	createNode->left = createNode->right = NULL;
+	return createNode;
+}
+
+int main()
+{
+    node *root = newNode('A');
+    root->left = newNode('D');
+    root->right = newNode('Z');
+    root->left->left = newNode('H');
+    root->left->right = newNode('L');
+    root->right->left = newNode('M');
+    root->right->right = newNode('C');
+    root->right->right->left = newNode('P');
+    diagnalTraversal(root);
+	return 0;
+}
+

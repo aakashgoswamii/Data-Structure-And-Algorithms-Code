@@ -1,0 +1,82 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define vertex 11
+
+void print(vector<int>adj[],int n)
+    {
+        for(int i=1;i<=n;i++)
+            {
+                cout<<i<<"----->";
+                for(auto x:adj[i])
+                    {
+                        cout<<x<<" ";
+                    }
+                cout<<endl;
+            }
+        return;
+    }
+    
+bool checkCycle(vector<int>adj[])
+    {
+        vector<int>visited(vertex+1,0);
+        
+        for(int i=1;i<=vertex;i++)
+            {
+                if(visited[i]==0)
+                    {
+                        int par = -1;
+                        visited[i] = 1;
+                        queue<pair<int,int>>q;
+                        q.push({i,par});
+                        while(!q.empty())
+                            {
+                                int node = q.front().first;
+                                int parent = q.front().second;
+                                q.pop();
+                                
+                                for(auto x:adj[node])
+                                    {
+                                        if(visited[x]==0)
+                                            {
+                                                visited[x] = 1;
+                                                q.push({x,node});
+                                            }
+                                        else if(parent!=x)
+                                            return true;
+                                    }
+                            }
+                    }
+            }
+        return false;
+    }
+    
+void addEdge(int u,int v,vector<int>adj[])
+    {
+        adj[u].push_back(v);
+        adj[v].push_back(u);
+    }
+    
+int main()
+    {
+        // int vertex = 5;
+        vector<int>adj[vertex+1];
+        
+        addEdge(1,2,adj);
+        addEdge(2,4,adj);
+        addEdge(3,5,adj);
+        addEdge(5,10,adj);
+        addEdge(5,6,adj);
+        addEdge(6,7,adj);
+        addEdge(7,8,adj);
+        addEdge(8,9,adj);
+        addEdge(8,11,adj);
+        addEdge(10,9,adj);
+        bool ans = checkCycle(adj);
+        if(ans==1)
+            cout<<"cycle is present"<<endl;
+        else
+            cout<<"Cycle is not present";
+        // print(adj,vertex);
+    }
+    
+    

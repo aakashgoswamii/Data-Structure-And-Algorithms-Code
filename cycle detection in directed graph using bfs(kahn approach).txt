@@ -1,0 +1,52 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define vertex 5
+
+bool checkCycle(vector<int>adj[],vector<int>&indegree)
+    {
+        queue<int>q;
+        for(int i=1;i<indegree.size();i++)
+            {
+                if(indegree[i]==0)
+                    q.push(i);
+            }
+        
+        int counter = 0;
+        while(!q.empty())
+            {
+                int node = q.front();
+                cout<<node<<" ";
+                q.pop();
+                counter++;
+                for(auto x:adj[node])
+                    {
+                        indegree[x]-=1;
+                        
+                        if(indegree[x]==0)
+                            q.push(x);
+                    }
+            }
+        if(counter==vertex-1)
+            return false;
+        else
+            return true;
+    }
+    
+void addEdge(int u,int v,vector<int>adj[],vector<int>&indegree)
+    {
+        indegree[v]+=1;
+        adj[u].push_back(v);
+        return;
+    }
+    
+int main()
+    {
+        vector<int>adj[vertex];
+        vector<int>indegree(vertex,0);
+        addEdge(1,2,adj,indegree);
+        addEdge(2,3,adj,indegree);
+        addEdge(3,4,adj,indegree);
+        addEdge(4,2,adj,indegree);
+        
+        if(checkCycle(adj,indegree))cout<<"cycle is present";else cout<<"cycle is not present"<<endl;
+    }

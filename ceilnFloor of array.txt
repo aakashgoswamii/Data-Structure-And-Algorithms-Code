@@ -1,0 +1,36 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+int floorSearch(vector<int>arr,int n,int x)
+   {
+       int low = 0;
+       int high = n-1;
+       int mid = (low+high)/2;
+       int resFloor = INT_MIN;
+       if(x>arr[high])
+          return arr[high];
+       while(low<=high)
+           {
+                if(x>=arr[mid])
+                  {
+                      resFloor = max(resFloor,arr[mid]);
+                      low = mid+1;
+                  }
+                
+                else if(x<=arr[mid])
+                    {
+                        high = mid-1;
+                    }
+                mid = (low+high)/2;
+           }
+        return resFloor;
+   }
+
+int main()
+    {
+        vector<int>arr = {1,2,4,6,10,12,14};
+        int n = arr.size();
+        int x = 9;
+        cout<<"floor is:"<<floorSearch(arr,n,x)<<" ";
+        return 0;
+    }

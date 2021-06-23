@@ -1,0 +1,61 @@
+
+
+#include<bits/stdc++.h>
+using namespace std;
+
+class node{
+    public:
+        int data;
+        node *next;
+};
+
+void printNode(node *head)
+    {
+        while(head!=NULL)
+            {
+                cout<<head->data<<" ";
+                head = head->next;
+            }
+        return;
+    }
+void insert(node **head,int value)
+    {
+        node *newNode = new node();
+        newNode->data = value;
+        newNode->next = *head;
+        *head = newNode;
+    }
+    
+void append(node **head,int value)
+    {
+        node *newNode = new node();
+        newNode->data = value;
+        newNode->next = NULL;
+        node *last = *head;
+        
+        if(*head == NULL)
+           {
+           *head = newNode;
+            return;
+           }
+        else
+            {
+                while(last->next!=NULL)
+                    last = last->next;
+                last->next = newNode;
+                newNode->next = NULL;
+            }
+        return;
+    }
+
+int main()
+    {
+        node *head = NULL;
+        append(&head,12);
+        insert(&head,7);
+        insert(&head,17);
+        append(&head,23);
+        insert(&head,89);
+        printNode(head);
+        return 0;
+    }

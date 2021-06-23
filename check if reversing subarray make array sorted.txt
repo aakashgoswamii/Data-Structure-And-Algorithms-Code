@@ -1,0 +1,117 @@
+#include<bits/stdc++.h>
+#include<algorithm>
+using namespace std;
+#include<vector>
+
+bool solve(vector<int>arr,int n)
+    {
+        int flag = 1;
+        int ind1,ind2;
+        vector<int>arrDup;
+        arrDup = arr;
+        sort(arrDup.begin(),arrDup.end());
+        // 1,2,3,4,5
+        
+        for(int i=0;i<n;i++)
+            {
+                if(arr[i]!=arrDup[i])
+                   {
+                       ind1 = i;
+                       break;
+                   }
+            }
+        for(int i = n-1;i>=0;i--)
+            {
+                if(arr[i]!=arrDup[i])
+                   {
+                       ind2 = i;
+                       break;
+                   }
+            }
+        for(int i=ind1;i<ind2;i++)
+            {
+                if(arr[i]>arr[i+1])
+                   continue;
+                else
+                    {
+                        flag = 0;
+                        break;
+                    }
+            }
+        if(flag == 1)
+           return true;
+        else
+           return false;
+    }
+
+int main()
+    {
+        vector<int>arr = {1,2,3,7,5,2};
+        int n = arr.size();
+        if(solve(arr,n) == 1)
+           cout<<"Yes"<<endl;
+        else
+            cout<<"No"<<endl;
+        
+        return 0;
+    }
+
+******************************************************************************************************
+t.c : o(n) sc: o(1)
+
+#include<bits/stdc++.h>
+#include<algorithm>
+using namespace std;
+#include<vector>
+
+bool solve(vector<int>arr,int n)
+    {
+        int i;
+        if(n == 1)
+           return true;
+        
+        for(i=1;i<n;i++)
+            {
+                if(arr[i]>arr[i-1])
+                   continue;
+                else
+                    break;
+            }
+        if(i == n)
+           return true;
+        
+        int j = i;
+        
+        while(j<n && arr[j]<arr[j-1])
+            {
+                if(i>1 && arr[j]<arr[i-2])
+                   return false;
+                j++;
+            }
+        if(j == n)
+           return true;
+        int k = j;
+        
+        if(arr[k]<arr[i-1])
+           return false;
+        
+        while(k>1 && k<n)
+            {
+                if(arr[k]<arr[k-1])
+                  return false;
+                k++;
+            }
+        return true;
+    }
+
+int main()
+    {
+        vector<int>arr = { 12,14,16,19,17,26,28,29}; // 12,14,16,19,17,26,28,29
+        int n = arr.size();
+        if(solve(arr,n) == 1)
+           cout<<"Yes"<<endl;
+        else
+            cout<<"No"<<endl;
+        
+        return 0;
+    }

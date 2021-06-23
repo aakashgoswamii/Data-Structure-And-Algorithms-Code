@@ -1,0 +1,25 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+class meeting{
+public:
+    int sp;
+    int ep;
+};
+
+bool compare(meeting s1,meeting s2){
+    return (s1.sp<s2.sp);
+}
+
+int main()
+    {
+        meeting interval[] = {{1,3},{2,4},{6,8},{10,14},{7,9}};
+        int n = sizeof(interval)/sizeof(interval[0]);
+        sort(interval,interval+n,compare);
+        
+        for(auto itr:interval){
+            cout<<itr.sp<<" "<<itr.ep<<" ";
+            cout<<endl;
+        }
+    return 0;
+    }

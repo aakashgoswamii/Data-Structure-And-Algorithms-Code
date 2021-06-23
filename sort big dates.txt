@@ -1,0 +1,85 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+int getMax(int dates[][3],int n , int k)
+    {
+        int maxi = INT_MIN;
+        for(int i=0;i<n;i++)
+            maxi = max(maxi,dates[i][k]);
+        return maxi;
+    }
+
+void countingSort(int dates[][3],int n, int exp,int k)
+    {
+        vector<int>freq(10,0);
+        
+        for(int i=0;i<n;i++)
+            freq[dates[i][k]/exp %10]++;
+        
+        for(int i=1;i<freq.size();i++)
+            freq[i] = freq[i]+freq[i-1];
+        
+        vector<vector<int>>arr;
+        for(int i=n-1;i>=0;i--)
+            {
+                int pos = dates[i][k]/exp%10;
+                for(int j=0;j<3;j++)
+                    {
+                        arr[freq[pos]-1][j] = dates[i][j];
+                    }
+                freq[pos]--;
+            }
+
+        for(int i=0;i<6;i++)
+            {
+                for(int j=0;j<3;j++)
+                    {
+                        dates[i][j] = arr[i][j];
+                    }
+            }
+    }
+
+void radixSort(int dates[][3] , int n , int k)
+    {
+        int maxi = getMax(dates,n,k);
+        
+        int exp = 1;
+        
+        while(exp<=maxi)
+            {
+                countingSort(dates,n,exp,k);
+                exp = exp*10;
+            }
+        
+    }
+
+void sortDates(int dates[][3],int n)
+    {
+        radixSort(dates,n,0);   //  for days
+        radixSort(dates,n,1);
+        radixSort(dates,n,2);
+    }
+
+int main()
+    {
+        int dates[][3]=            {{20,1,2014},
+                                    {25,3,2010},
+                                    {3,12,2000},
+                                    {18,11,2000},
+                                    {19,4,2015},
+                                    {9,7,2005} };
+        
+        int n = sizeof(dates)/sizeof(dates[0]);
+        sortDates(dates,n);
+        
+        for(int i=0;i<6;i++)
+            {
+                for(int j=0;j<3;j++)
+                    {
+                        cout<<dates[i][j]<<" ";
+                    }
+                cout<<endl;
+            }
+        return 0;
+    }
+    

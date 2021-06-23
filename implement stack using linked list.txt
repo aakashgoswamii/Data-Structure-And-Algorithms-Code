@@ -1,0 +1,81 @@
+#include<bits/stdc++.h>
+#define MAX 1000
+using namespace std;
+
+class StackNode
+    {
+        public:
+            int data;
+            StackNode *next;
+            // StackNode *newNode(int val);
+            void push(StackNode **head,int val);
+            void pop(StackNode **head);
+            bool isEMPTY(StackNode *head);
+            void PEEK(StackNode *head);
+            
+    };
+
+bool StackNode::isEMPTY(StackNode *head)
+    {
+        if(head==NULL)
+           return true;
+        return false;
+    }
+
+void StackNode::pop(StackNode **head)
+    {
+        if(isEMPTY(*head))
+           {
+               cout<<"stack is empty"<<endl;
+               return;
+           }
+        StackNode *temp = *head;
+        *head = (*head)->next;
+        cout<<temp->data<<" is poped out from the list"<<endl;
+        free(temp);
+    }
+    
+StackNode *newNode(int val)
+    {
+        StackNode *temp = new StackNode();
+        temp->data = val;
+        temp->next = NULL;
+        return temp;
+    }
+void StackNode::PEEK(StackNode *head)
+    {
+        if(isEMPTY(head))
+           {
+               cout<<"stack is empty"<<endl;
+               return;
+           }
+        StackNode *temp = head;
+        int peek = temp->data;
+        cout<<peek<<endl;
+    }
+    
+void StackNode:: push(StackNode **head,int val)
+    {
+        StackNode *stackNode = newNode(val);
+        stackNode->next = *head;
+        *head = stackNode;
+        cout<<val<<" is pushed into stack"<<endl;
+        return;
+    }
+
+int main()
+    {
+        class StackNode s;
+        StackNode *head = NULL;
+        s.push(&head,10);
+        s.push(&head,20);
+        s.push(&head,30);
+        s.pop(&head);
+        s.pop(&head);
+        s.pop(&head);
+        s.PEEK(head);
+    }
+    
+    
+    
+    

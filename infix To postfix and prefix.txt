@@ -1,0 +1,136 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+int precedence(char oper)
+    {
+        if(oper=='+'||oper=='-')
+           return 1;
+        else if(oper=='*'||oper=='/')
+           return 2;
+        else
+            return 0;
+    }
+    
+int main()
+    {
+        string str;
+        cin>>str;
+        
+        stack<string>pre;
+        stack<string>post;
+        stack<char>operatorr;
+        
+        int n = str.length();
+        
+        for(int i=0;i<n;i++)
+            {
+                if(str[i]=='(')
+                   {
+                       operatorr.push(str[i]);
+                   }
+                else if((str[i]>='a'&&str[i]<='z')||(str[i]>='A'&&str[i]<='Z')||(str[i]>='0'&&str[i]<='9'))
+                    {
+                        pre.push(str[i] + "");
+                        post.push(str[i] + "");
+                    }
+                else if(str[i]==')')
+                    {
+                        while(operatorr.top()!='('&&operatorr.size()>0)
+                            {
+                                string v2 = pre.top();
+                                pre.pop();
+                                string v1 = pre.top();
+                                pre.pop();
+                                char oper = operatorr.top();
+                                
+                                string preV = oper+v1+v2;
+                                
+                                pre.push(preV);
+                                
+                                v2 = post.top();
+                                post.pop();
+                                v1 = post.top();
+                                post.pop();
+                                
+                                operatorr.pop();
+                                
+                                string postV = v1+v2+oper;
+                                
+                                post.push(postV);
+                            }
+                    if(operatorr.size()>0)
+                         operatorr.pop();
+                    }
+                    
+                else if(str[i]=='+'||str[i]=='-'||str[i]=='/'||str[i]=='*')
+                    {
+                        while(operatorr.top()!='('&&operatorr.size()>0 && precedence(str[i] )<=precedence(operatorr.top()))
+                            {
+                                string v2 = pre.top();
+                                pre.pop();
+                                string v1 = pre.top();
+                                pre.pop();
+                                char oper = operatorr.top();
+                                
+                                string preV = oper+v1+v2;
+                                
+                                pre.push(preV);
+                                
+                                v2 = post.top();
+                                post.pop();
+                                v1 = post.top();
+                                post.pop();
+                            
+                                operatorr.pop();
+                                
+                                string postV = v1+v2+oper;
+                                
+                                post.push(postV);
+                            }
+                        operatorr.push(str[i]);
+                    }
+            }
+        
+                       while(operatorr.size()>0)
+                            {
+                                string v2 = pre.top();
+                                pre.pop();
+                                string v1 = pre.top();
+                                pre.pop();
+                                char oper = operatorr.top();
+                                
+                                string preV = oper+v1+v2;
+                                
+                                pre.push(preV);
+                                
+                                v2 = post.top();
+                                post.pop();
+                                v1 = post.top();
+                                post.pop();
+                                
+                                string postV = v1+v2+oper;
+                                
+                                operatorr.pop();
+                                
+                                post.push(postV);
+                            }
+                            
+        cout<<"Prefix expression is: "<<pre.top()<<endl;
+        cout<<"postfix expression is: "<<post.top()<<endl;
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    

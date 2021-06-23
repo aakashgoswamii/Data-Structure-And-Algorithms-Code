@@ -1,0 +1,38 @@
+#include<bits/stdc++.h>
+#include<algorithm>
+using namespace std;
+
+void findFourElements(int arr[],int n,int x)
+    {
+    	for(int i=0;i<n-3;i++)
+    	    {
+    	    	for(int j=i+1;j<n-2;j++)
+    	    	    {
+    	    	    	int k = j+1,l=n-1;
+    	    	    	while(k<l)
+    	    	    	    {
+    	    	    	    	if(arr[i]+arr[j]+arr[k]+arr[l]==x)
+    	    	    	    	   {
+    	    	    	    	   	cout<<arr[i]<<" "<<arr[j]<<" "<<arr[k]<<" "<<arr[l];
+    	    	    	    	   	return;
+								   }
+    	    	    	    	else if(arr[i]+arr[j]+arr[k]+arr[l]>x)
+    	    	    	    	   l--;
+    	    	    	    	else if(arr[i]+arr[j]+arr[k]+arr[l]<x)
+    	    	    	    	   k++;
+    	    	    	    	
+							}
+					}
+			}
+		return;
+	}
+	
+int main()
+    {
+    	int arr[]={1,4,45,6,10,12};
+    	int n = sizeof(arr)/sizeof(arr[0]);
+    	int x = 21;
+    	sort(arr,arr+n);
+    	findFourElements(arr,n,x);
+    	return 0;
+	}

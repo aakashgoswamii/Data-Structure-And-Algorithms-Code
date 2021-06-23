@@ -1,0 +1,61 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+class Interval {
+public:
+	int start;
+	int end;
+
+};
+
+bool compareInterval(Interval i1, Interval i2)
+{
+	return (i1.start < i2.start);
+}
+
+void mergeInterval(Interval arr[], int n)
+{
+	if (n <= 0)
+		return;
+
+	stack<Interval>s;
+
+	sort(arr, arr + n, compareInterval);
+
+	s.push(arr[0]);
+
+	for (int i = 1; i < n; i++)
+	{
+		Interval topEl = s.top();
+		if (topEl.end < arr[i].end && topEl.end >= arr[i].start)
+		{
+			topEl.end = arr[i].end;
+			s.pop();
+			s.push(topEl);
+		}
+		else if (topEl.end < arr[i].start) {
+			s.push(arr[i]);
+		}
+	}
+	while (!s.empty()) {
+		cout << "[" << s.top().start << "," << s.top().end << "]" << endl;
+		s.pop();
+	}
+}
+
+int main()
+{
+	// Interval arr[] = {{22, 28}, {1, 8}, {25, 27}, {14, 19}, {27, 30}, {5, 12}};
+	Interval arr[] = {{6, 8}, {1, 9}, {2, 4}, {4, 7}};
+	// {{1,8},{5,12},{14,19},{22,28},{25,27},{27,30}}
+	int n = sizeof(arr) / sizeof(arr[0]);
+	mergeInterval(arr, n);
+	return 0;
+}
+
+
+
+
+
+
+

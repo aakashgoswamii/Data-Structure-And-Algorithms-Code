@@ -1,0 +1,79 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+class node{
+    public:
+        int data;
+        node *next;
+};
+
+void print(node *ans){
+    while(ans!=NULL){
+        cout<<ans->data<<" ";
+        ans = ans->next;
+    }
+    return;
+}
+
+node* newNode(int value){
+    node *createNode = new node();
+    createNode->data = value;
+    createNode->next = NULL;
+    return createNode;
+}
+
+node *solve(node *head){
+    if(head==NULL||head->next==NULL)
+        return head;
+        
+    node evenDummy;
+    node oddDummy;
+    node *even = &evenDummy;
+    evenDummy.next = NULL;
+    node *odd = &oddDummy;
+    oddDummy.next = NULL;
+    while(head!=NULL){
+        if(head->data%2==0){
+            even->next = newNode(head->data);
+            even = even->next;
+        }
+        
+        else if(head->data%2!=0){
+            odd->next = newNode(head->data);
+            odd = odd->next;
+        }
+        head = head->next;
+    }
+    
+    odd->next = evenDummy.next;
+    return oddDummy.next;
+}
+
+int main()
+    {
+        // node *head = newNode(1); 
+        // head->next  = newNode(7);
+        // head->next->next = newNode(2);
+        // head->next->next->next = newNode(6);
+        // head->next->next->next->next = newNode(3);
+        // head->next->next->next->next->next = newNode(5);
+        // head->next->next->next->next->next->next = newNode(-4);
+        // head->next->next->next->next->next->next->next = newNode(18);
+        // head->next->next->next->next->next->next->next->next = newNode(13);
+        // head->next->next->next->next->next->next->next->next->next = newNode(-23);
+        // head->next->next->next->next->next->next->next->next->next->next = newNode(10);
+        // head->next->next->next->next->next->next->next->next->next->next->next = newNode(19);
+        
+        node *head = newNode(20);
+        head->next = newNode(32);
+        head->next->next = newNode(18);
+        head->next->next->next = newNode(12);
+        node *ans = solve(head);
+        print(ans);
+    }
+    
+    
+    
+    
+    
+    

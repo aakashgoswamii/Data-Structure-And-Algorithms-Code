@@ -1,0 +1,96 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+class node{
+    public:
+        int data;
+        node *next;
+};
+
+void print(node *ans){
+    while(ans!=NULL){
+        cout<<ans->data<<" ";
+        ans = ans->next;
+    }
+    return;
+}
+
+node* newNode(int value){
+    node *createNode = new node();
+    createNode->data = value;
+    createNode->next = NULL;
+    return createNode;
+}
+
+node *findMiddle(node *head){
+    if(head==NULL||head->next==NULL)
+        return head;
+        
+    node *slow = head;
+    node *fast = head;
+    
+    while(fast->next!=NULL&&fast->next->next!=NULL){
+        slow = slow->next;
+        fast = fast->next->next;
+    }
+    return slow;
+}
+
+
+
+node *mergeTwoSortedLL(node *l1,node *l2){
+    if(l1==NULL)
+        return l2;
+    if(l2==NULL)
+        return l1;
+
+    if(l1->data>l2->data){
+        std::swap(l1,l2);
+    }
+    
+    node *res = l1;
+    node *temp;
+    while(l1!=NULL&&l2!=NULL){
+        temp = NULL;
+        while(l1!=NULL&&l1->data<=l2->data){
+            temp = l1;
+            l1 = l1->next;
+        }
+        temp->next = l2;
+        std:swap(l1,l2);
+    }
+    return res;
+}
+
+node *solve(node *head){
+    if(head==NULL||head->next==NULL)
+        return head;
+        
+    node *mid = findMiddle(head);
+    node *secondHalf = mid->next;
+    mid->next = NULL;
+    node *l1 = solve(head);
+    node *l2 = solve(secondHalf);
+    node *res = mergeTwoSortedLL(l1,l2);
+    return res;
+}
+
+int main()
+    {
+        node *head = newNode(7); 
+        head->next  = newNode(700);
+        head->next->next = newNode(60);
+        head->next->next->next = newNode(3);
+        head->next->next->next->next = newNode(55);
+        head->next->next->next->next->next = newNode(24);
+        head->next->next->next->next->next->next = newNode(17);
+        head->next->next->next->next->next->next->next = newNode(18);
+        head->next->next->next->next->next->next->next->next = newNode(-7);
+        head->next->next->next->next->next->next->next->next->next = newNode(-2);
+        head->next->next->next->next->next->next->next->next->next->next = newNode(0);
+        head->next->next->next->next->next->next->next->next->next->next->next = newNode(18);
+        node *ans = solve(head);
+        print(ans);
+    }
+    
+    
